@@ -45,6 +45,7 @@ public class MarksService {
 		return marks;
 	}
 
+	/*
 	public void setMarkResend(boolean revised, Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String dni = auth.getName();
@@ -53,7 +54,7 @@ public class MarksService {
 			marksRepository.updateResend(revised, id);
 		}
 	}
-
+*/
 	public Page<Mark> searchMarksByDescriptionAndNameForUser(Pageable pageable, String searchText, User user) {
 		Page<Mark> marks = new PageImpl<Mark>(new LinkedList<Mark>());
 		searchText = "%" + searchText + "%";
