@@ -16,7 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.uniovi.entities.Mark;
+import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.MarksRepository;
 
@@ -34,8 +34,8 @@ public class MarksService {
 		return marks;
 	}*/
 
-	public Page<Mark> getMarksForUser(Pageable pageable, User user) {
-		Page<Mark> marks = new PageImpl<Mark>(new LinkedList<Mark>());
+	public Page<Offer> getMarksForUser(Pageable pageable, User user) {
+		Page<Offer> marks = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (user.getRole().equals("ROLE_STUDENT")) {
 			marks = marksRepository.findAllByUser(pageable, user);
 		}
@@ -55,8 +55,8 @@ public class MarksService {
 		}
 	}
 */
-	public Page<Mark> searchMarksByDescriptionAndNameForUser(Pageable pageable, String searchText, User user) {
-		Page<Mark> marks = new PageImpl<Mark>(new LinkedList<Mark>());
+	public Page<Offer> searchMarksByDescriptionAndNameForUser(Pageable pageable, String searchText, User user) {
+		Page<Offer> marks = new PageImpl<Offer>(new LinkedList<Offer>());
 		searchText = "%" + searchText + "%";
 		if (user.getRole().equals("ROLE_STUDENT")) {
 			marks = marksRepository.searchByDescriptionNameAndUser(pageable, searchText, user);
@@ -67,23 +67,23 @@ public class MarksService {
 		return marks;
 	}
 
-	public Page<Mark> getMarks(Pageable pageable) {
-		Page<Mark> marks = marksRepository.findAll(pageable);
+	public Page<Offer> getMarks(Pageable pageable) {
+		Page<Offer> marks = marksRepository.findAll(pageable);
 		return marks;
 	}
 	
-	public Mark getMark(Long id) {
-		Set<Mark> consultedList = (Set<Mark>) httpSession.getAttribute("consultedList");
+	public Offer getMark(Long id) {
+		Set<Offer> consultedList = (Set<Offer>) httpSession.getAttribute("consultedList");
 		if (consultedList == null) {
-			consultedList = new HashSet<Mark>();
+			consultedList = new HashSet<Offer>();
 		}
-		Mark markObtained = marksRepository.findById(id).get();
+		Offer markObtained = marksRepository.findById(id).get();
 		consultedList.add(markObtained);
 		httpSession.setAttribute("consultedList", consultedList);
 		return markObtained;
 	}
 
-	public void addMark(Mark mark) {
+	public void addMark(Offer mark) {
 		// Si en Id es null le asignamos el ultimo + 1 de la lista
 		marksRepository.save(mark);
 	}

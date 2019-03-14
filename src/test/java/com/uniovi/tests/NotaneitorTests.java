@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.uniovi.entities.Mark;
+import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 import com.uniovi.services.RolesService;
@@ -91,23 +91,23 @@ public class NotaneitorTests {
 		User user6 = new User("99999988F", "Edward", "Núñez");
 		user6.setPassword("123456");
 		user6.setRole(rolesService.getRoles()[2]);
-		Set<Mark> user1Marks = new HashSet<Mark>();
+		Set<Offer> user1Marks = new HashSet<Offer>();
 		for(int i = 1; i <5; i++)
-		 user1Marks.add(new Mark("Nota A"+String.valueOf(i), i*1.0, user1));
+		 user1Marks.add(new Offer("Nota A"+String.valueOf(i), i*1.0, user1));
 		user1.setMarks(user1Marks);
-		Set<Mark> user2Marks = new HashSet<Mark>();
+		Set<Offer> user2Marks = new HashSet<Offer>();
 		for(int i = 1; i <5; i++)
-		 user2Marks.add(new Mark("Nota A"+String.valueOf(i), i*1.0, user2));
+		 user2Marks.add(new Offer("Nota A"+String.valueOf(i), i*1.0, user2));
 		user2.setMarks(user2Marks);
-		Set<Mark> user3Marks = new HashSet<Mark>();
+		Set<Offer> user3Marks = new HashSet<Offer>();
 		for(int i = 1; i <8; i++)
-		 user3Marks.add(new Mark("Nota A"+String.valueOf(i), i*1.0, user3));
+		 user3Marks.add(new Offer("Nota A"+String.valueOf(i), i*1.0, user3));
 		user3.setMarks(user3Marks);
-		Set<Mark> user4Marks = new HashSet<Mark>();
+		Set<Offer> user4Marks = new HashSet<Offer>();
 		for(int i = 1; i <15; i++)
-		 user4Marks.add(new Mark("Nota A"+String.valueOf(i), i*1.0, user4));
+		 user4Marks.add(new Offer("Nota A"+String.valueOf(i), i*1.0, user4));
 		//OJO que la prueba 15 que trata de borrar esta nota no siempre la encuentra en la
-		user4Marks.add(new Mark("Nota Nueva 1", 9.0, user4));
+		user4Marks.add(new Offer("Nota Nueva 1", 9.0, user4));
 		user4.setMarks(user4Marks);
 		usersService.addUser(user1);
 		usersService.addUser(user2);

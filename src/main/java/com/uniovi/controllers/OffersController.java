@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.uniovi.entities.Mark;
+import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.services.MarksService;
 import com.uniovi.services.UsersService;
 
 @Controller
-public class MarksController {
+public class OffersController {
 
 	@Autowired // Inyectar el servicio
 	private MarksService marksService;
@@ -38,7 +38,7 @@ public class MarksController {
 	public String updateList(Model model,Pageable pageable, Principal principal) {
 		String dni = principal.getName(); // DNI es el name de la autenticación
 		User user = usersService.getUserByDni(dni);
-		Page<Mark> marks = marksService.getMarksForUser(pageable, user);
+		Page<Offer> marks = marksService.getMarksForUser(pageable, user);
 		model.addAttribute("markList", marks.getContent() );
 		return "mark/list :: tableMarks";
 	}
@@ -48,7 +48,7 @@ public class MarksController {
 			@RequestParam(value = "", required = false) String searchText) {
 		String dni = principal.getName(); // DNI es el name de la autenticación
 		User user = usersService.getUserByDni(dni);
-		Page<Mark> marks = new PageImpl<Mark>(new LinkedList<Mark>());
+		Page<Offer> marks = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (searchText != null && !searchText.isEmpty()) {
 			marks = marksService.searchMarksByDescriptionAndNameForUser(pageable, searchText, user);
 		} else {
@@ -72,7 +72,7 @@ public class MarksController {
 	}
 
 	@RequestMapping(value = "/mark/add", method = RequestMethod.POST)
-	public String setMark(@ModelAttribute Mark mark) {
+	public String setMark(@ModelAttribute Offer mark) {
 		marksService.addMark(mark);
 		return "redirect:/mark/list";
 	}
@@ -103,8 +103,8 @@ public class MarksController {
 	}
 
 	@RequestMapping(value = "/mark/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Mark mark) {
-		Mark original = marksService.getMark(id);
+	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Offer mark) {
+		Offer original = marksService.getMark(id);
 		// modificar solo score y description
 		original.setScore(mark.getScore());
 		original.setDescription(mark.getDescription());
