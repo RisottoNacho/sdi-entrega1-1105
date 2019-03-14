@@ -26,7 +26,7 @@ import com.uniovi.services.UsersService;
 public class OffersController {
 
 	@Autowired // Inyectar el servicio
-	private OffersService marksService;
+	private OffersService offersService;
 
 	@Autowired
 	private UsersService usersService;
@@ -38,7 +38,7 @@ public class OffersController {
 	public String updateList(Model model,Pageable pageable, Principal principal) {
 		String email = principal.getName(); // DNI es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
-		Page<Offer> offers = marksService.getMarksForUser(pageable, user);
+		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
 		model.addAttribute("markList", offers.getContent() );
 		return "mark/list :: tableMarks";
 	}
@@ -50,42 +50,42 @@ public class OffersController {
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> marks = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (searchText != null && !searchText.isEmpty()) {
-			marks = marksService.searchMarksByDescriptionAndNameForUser(pageable, searchText, user);
+			marks = offersService.searchOffersByDescriptionAndNameForUser(pageable, searchText, user);
 		} else {
-			marks = marksService.getMarksForUser(pageable, user);
+			marks = offersService.getOffersForUser(pageable, user);
 		}
 		model.addAttribute("page", marks);
 		model.addAttribute("markList", marks.getContent());
 		return "offer/list";
 	}
 
-	@RequestMapping(value = "/offer/{id}/resend", method = RequestMethod.GET)
+	@RequestMapping(value = "/offer/{id}/buy", method = RequestMethod.GET)
 	public String setResendTrue(Model model, @PathVariable Long id) {
-		marksService.setMarkResend(true, id);
+		offersService.setOfferBuyed(true, id);
 		return "redirect:/offer/list";
 	}
 
-	@RequestMapping(value = "/offer/{id}/noresend", method = RequestMethod.GET)
+	@RequestMapping(value = "/offer/{id}/nobuy", method = RequestMethod.GET)
 	public String setResendFalse(Model model, @PathVariable Long id) {
-		marksService.setMarkResend(false, id);
+		offersService.setOfferBuyed(false, id);
 		return "redirect:/offer/list";
 	}
 
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
 	public String setOffer(@ModelAttribute Offer mark) {
-		marksService.addMark(mark);
+		offersService.addOffer(mark);
 		return "redirect:/offer/list";
 	}
 
 	@RequestMapping("/offer/details/{id}")
 	public String getDetail(Model model, @PathVariable Long id) {
-		model.addAttribute("mark", marksService.getMark(id));
+		model.addAttribute("mark", offersService.getOffer(id));
 		return "offer/details";
 	}
 
 	@RequestMapping("/offer/delete/{id}")
 	public String deleteOffer(@PathVariable Long id) {
-		marksService.deleteMark(id);
+		offersService.deleteOffer(id);
 		return "redirect:/offer/list";
 	}
 
@@ -97,18 +97,19 @@ public class OffersController {
 
 	@RequestMapping(value = "/offer/edit/{id}")
 	public String getEdit(Model model, @PathVariable Long id) {
-		model.addAttribute("mark", marksService.getMark(id));
+		model.addAttribute("mark", offersService.getOffer(id));
 		model.addAttribute("usersList", usersService.getUsers());
 		return "offer/edit";
 	}
 
+	// PENDIENTE DE IMPLEMENTACIÓN
 	@RequestMapping(value = "/offer/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Offer mark) {
-		Offer original = marksService.getMark(id);
+	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Offer offer) {
+		Offer original = offersService.getOffer(id);
 		// modificar solo score y description
-		original.setScore(mark.getScore());
-		original.setDescription(mark.getDescription());
-		marksService.addMark(original);
+		original.setScore(offer.getScore());
+		original.setDescription(offer.getDescription());
+		//offersService.getOffer(original);
 		return "redirect:/offer/details/" + id;
 	}
 
