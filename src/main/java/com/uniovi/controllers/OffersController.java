@@ -36,8 +36,8 @@ public class OffersController {
 
 	@RequestMapping("/mark/list/update")
 	public String updateList(Model model,Pageable pageable, Principal principal) {
-		String dni = principal.getName(); // DNI es el name de la autenticación
-		User user = usersService.getUserByDni(dni);
+		String email = principal.getName(); // DNI es el name de la autenticación
+		User user = usersService.getUserByEmail(email);
 		Page<Offer> marks = marksService.getMarksForUser(pageable, user);
 		model.addAttribute("markList", marks.getContent() );
 		return "mark/list :: tableMarks";
@@ -46,8 +46,8 @@ public class OffersController {
 	@RequestMapping("/mark/list")
 	public String getList(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value = "", required = false) String searchText) {
-		String dni = principal.getName(); // DNI es el name de la autenticación
-		User user = usersService.getUserByDni(dni);
+		String email = principal.getName(); // DNI es el name de la autenticación
+		User user = usersService.getUserByEmail(email);
 		Page<Offer> marks = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (searchText != null && !searchText.isEmpty()) {
 			marks = marksService.searchMarksByDescriptionAndNameForUser(pageable, searchText, user);

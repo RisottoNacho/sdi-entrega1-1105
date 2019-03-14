@@ -45,16 +45,16 @@ public class MarksService {
 		return marks;
 	}
 
-	/*
+	
 	public void setMarkResend(boolean revised, Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String dni = auth.getName();
-		Mark mark = marksRepository.findById(id).get();
-		if (mark.getUser().getDni().equals(dni)) {
+		String email = auth.getName();
+		Offer offer = marksRepository.findById(id).get();
+		if (offer.getUser().getEmail().equals(email)) {
 			marksRepository.updateResend(revised, id);
 		}
 	}
-*/
+
 	public Page<Offer> searchMarksByDescriptionAndNameForUser(Pageable pageable, String searchText, User user) {
 		Page<Offer> marks = new PageImpl<Offer>(new LinkedList<Offer>());
 		searchText = "%" + searchText + "%";
