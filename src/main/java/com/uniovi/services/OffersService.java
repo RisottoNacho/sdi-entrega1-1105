@@ -1,9 +1,7 @@
 package com.uniovi.services;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -18,12 +16,12 @@ import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
-import com.uniovi.repositories.MarksRepository;
+import com.uniovi.repositories.OffersRepository;
 
 @Service
-public class MarksService {
+public class OffersService {
 	@Autowired
-	private MarksRepository marksRepository;
+	private OffersRepository offersRepository;
 
 	@Autowired
 	private HttpSession httpSession;
@@ -34,24 +32,24 @@ public class MarksService {
 		return marks;
 	}*/
 
-	public Page<Offer> getMarksForUser(Pageable pageable, User user) {
-		Page<Offer> marks = new PageImpl<Offer>(new LinkedList<Offer>());
+	public Page<Offer> getOffersForUser(Pageable pageable, User user) {
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (user.getRole().equals("ROLE_STUDENT")) {
-			marks = marksRepository.findAllByUser(pageable, user);
+			offers = offersRepository.findAllByUser(pageable, user);
 		}
 		if (user.getRole().equals("ROLE_PROFESSOR")) {
-			marks = getMarks(pageable);
+			offers = getOffers(pageable);
 		}
-		return marks;
+		return offers;
 	}
 
 	
 	public void setMarkResend(boolean revised, Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
-		Offer offer = marksRepository.findById(id).get();
+		Offer offer = offersRepository.findById(id).get();
 		if (offer.getUser().getEmail().equals(email)) {
-			marksRepository.updateResend(revised, id);
+			offersRepository.updateResend(revised, id);
 		}
 	}
 
@@ -59,37 +57,38 @@ public class MarksService {
 		Page<Offer> marks = new PageImpl<Offer>(new LinkedList<Offer>());
 		searchText = "%" + searchText + "%";
 		if (user.getRole().equals("ROLE_STUDENT")) {
-			marks = marksRepository.searchByDescriptionNameAndUser(pageable, searchText, user);
+			marks = offersRepository.searchByDescriptionNameAndUser(pageable, searchText, user);
 		}
 		if (user.getRole().equals("ROLE_PROFESSOR")) {
-			marks = marksRepository.searchByDescriptionAndName(pageable, searchText);
+			marks = offersRepository.searchByDescriptionAndName(pageable, searchText);
 		}
 		return marks;
 	}
 
-	public Page<Offer> getMarks(Pageable pageable) {
-		Page<Offer> marks = marksRepository.findAll(pageable);
-		return marks;
+	public Page<Offer> getOffers(Pageable pageable) {
+		Page<Offer> offers = offersRepository.findAll(pageable);
+		return offers;
 	}
 	
-	public Offer getMark(Long id) {
+	public Offer getOffer(Long id) {
+		@SuppressWarnings("unchecked")
 		Set<Offer> consultedList = (Set<Offer>) httpSession.getAttribute("consultedList");
 		if (consultedList == null) {
 			consultedList = new HashSet<Offer>();
 		}
-		Offer markObtained = marksRepository.findById(id).get();
-		consultedList.add(markObtained);
+		Offer offerObtained = offersRepository.findById(id).get();
+		consultedList.add(offerObtained);
 		httpSession.setAttribute("consultedList", consultedList);
-		return markObtained;
+		return offerObtained;
 	}
 
-	public void addMark(Offer mark) {
+	public void addOffer(Offer offer) {
 		// Si en Id es null le asignamos el ultimo + 1 de la lista
-		marksRepository.save(mark);
+		offersRepository.save(offer);
 	}
 
-	public void deleteMark(Long id) {
-		marksRepository.deleteById(id);
+	public void deleteOffer(Long id) {
+		offersRepository.deleteById(id);
 	}
 
 }

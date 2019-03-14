@@ -11,7 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 
-public interface MarksRepository extends CrudRepository<Offer, Long> {
+public interface OffersRepository extends CrudRepository<Offer, Long> {
 	@Modifying
 	@Transactional
 	@Query("UPDATE Mark SET resend = ?1 WHERE id = ?2")

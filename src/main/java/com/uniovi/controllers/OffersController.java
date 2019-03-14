@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
-import com.uniovi.services.MarksService;
+import com.uniovi.services.OffersService;
 import com.uniovi.services.UsersService;
 
 @Controller
 public class OffersController {
 
 	@Autowired // Inyectar el servicio
-	private MarksService marksService;
+	private OffersService marksService;
 
 	@Autowired
 	private UsersService usersService;
@@ -34,16 +34,16 @@ public class OffersController {
 	@Autowired
 	private HttpSession httpSession;
 
-	@RequestMapping("/mark/list/update")
+	@RequestMapping("/offer/list/update")
 	public String updateList(Model model,Pageable pageable, Principal principal) {
 		String email = principal.getName(); // DNI es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
-		Page<Offer> marks = marksService.getMarksForUser(pageable, user);
-		model.addAttribute("markList", marks.getContent() );
+		Page<Offer> offers = marksService.getMarksForUser(pageable, user);
+		model.addAttribute("markList", offers.getContent() );
 		return "mark/list :: tableMarks";
 	}
 
-	@RequestMapping("/mark/list")
+	@RequestMapping("/offer/list")
 	public String getList(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value = "", required = false) String searchText) {
 		String email = principal.getName(); // DNI es el name de la autenticación
@@ -56,60 +56,60 @@ public class OffersController {
 		}
 		model.addAttribute("page", marks);
 		model.addAttribute("markList", marks.getContent());
-		return "mark/list";
+		return "offer/list";
 	}
 
-	@RequestMapping(value = "/mark/{id}/resend", method = RequestMethod.GET)
+	@RequestMapping(value = "/offer/{id}/resend", method = RequestMethod.GET)
 	public String setResendTrue(Model model, @PathVariable Long id) {
 		marksService.setMarkResend(true, id);
-		return "redirect:/mark/list";
+		return "redirect:/offer/list";
 	}
 
-	@RequestMapping(value = "/mark/{id}/noresend", method = RequestMethod.GET)
+	@RequestMapping(value = "/offer/{id}/noresend", method = RequestMethod.GET)
 	public String setResendFalse(Model model, @PathVariable Long id) {
 		marksService.setMarkResend(false, id);
-		return "redirect:/mark/list";
+		return "redirect:/offer/list";
 	}
 
-	@RequestMapping(value = "/mark/add", method = RequestMethod.POST)
-	public String setMark(@ModelAttribute Offer mark) {
+	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
+	public String setOffer(@ModelAttribute Offer mark) {
 		marksService.addMark(mark);
-		return "redirect:/mark/list";
+		return "redirect:/offer/list";
 	}
 
-	@RequestMapping("/mark/details/{id}")
+	@RequestMapping("/offer/details/{id}")
 	public String getDetail(Model model, @PathVariable Long id) {
 		model.addAttribute("mark", marksService.getMark(id));
-		return "mark/details";
+		return "offer/details";
 	}
 
-	@RequestMapping("/mark/delete/{id}")
-	public String deleteMark(@PathVariable Long id) {
+	@RequestMapping("/offer/delete/{id}")
+	public String deleteOffer(@PathVariable Long id) {
 		marksService.deleteMark(id);
-		return "redirect:/mark/list";
+		return "redirect:/offer/list";
 	}
 
-	@RequestMapping(value = "/mark/add")
-	public String getMark(Model model) {
+	@RequestMapping(value = "/offer/add")
+	public String getOffer(Model model) {
 		model.addAttribute("usersList", usersService.getUsers());
-		return "mark/add";
+		return "offer/add";
 	}
 
-	@RequestMapping(value = "/mark/edit/{id}")
+	@RequestMapping(value = "/offer/edit/{id}")
 	public String getEdit(Model model, @PathVariable Long id) {
 		model.addAttribute("mark", marksService.getMark(id));
 		model.addAttribute("usersList", usersService.getUsers());
-		return "mark/edit";
+		return "offer/edit";
 	}
 
-	@RequestMapping(value = "/mark/edit/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/offer/edit/{id}", method = RequestMethod.POST)
 	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Offer mark) {
 		Offer original = marksService.getMark(id);
 		// modificar solo score y description
 		original.setScore(mark.getScore());
 		original.setDescription(mark.getDescription());
 		marksService.addMark(original);
-		return "redirect:/mark/details/" + id;
+		return "redirect:/offer/details/" + id;
 	}
 
 }

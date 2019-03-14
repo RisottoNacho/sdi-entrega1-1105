@@ -22,7 +22,7 @@ public class Offer {
 	private User user;
 	private Boolean buyed = false;
 
-	public Offer(Long id, String title,Date date,String description, Double score) {
+	public Offer(Long id, String title, Date date, String description, Double score) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -52,7 +52,6 @@ public class Offer {
 	public Long getId() {
 		return id;
 	}
-	
 
 	public String getTitle() {
 		return title;
