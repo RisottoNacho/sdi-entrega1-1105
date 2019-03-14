@@ -15,7 +15,7 @@
 					th:if="${usersList != null and not #lists.isEmpty(usersList)}">
 					<select id="user" class="form-control" name="user">
 						<option th:each="user : ${usersList}" th:value="${user.id}"
-							th:text="${user.dni}+' - '+${user.name}+' ' +${user.lastName} ">
+							th:text="${user.email}+' - '+${user.name}+' ' +${user.lastName} ">
 							Usuario</option>
 					</select>
 				</div>
