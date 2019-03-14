@@ -44,25 +44,25 @@ public class OffersService {
 	}
 
 	
-	public void setMarkResend(boolean revised, Long id) {
+	public void setOfferBuyed(boolean buyed, Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		Offer offer = offersRepository.findById(id).get();
 		if (offer.getUser().getEmail().equals(email)) {
-			offersRepository.updateResend(revised, id);
+			offersRepository.updateBuyed(buyed, id);
 		}
 	}
 
-	public Page<Offer> searchMarksByDescriptionAndNameForUser(Pageable pageable, String searchText, User user) {
-		Page<Offer> marks = new PageImpl<Offer>(new LinkedList<Offer>());
+	public Page<Offer> searchOffersByDescriptionAndNameForUser(Pageable pageable, String searchText, User user) {
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		searchText = "%" + searchText + "%";
 		if (user.getRole().equals("ROLE_STUDENT")) {
-			marks = offersRepository.searchByDescriptionNameAndUser(pageable, searchText, user);
+			offers = offersRepository.searchByDescriptionNameAndUser(pageable, searchText, user);
 		}
 		if (user.getRole().equals("ROLE_PROFESSOR")) {
-			marks = offersRepository.searchByDescriptionAndName(pageable, searchText);
+			offers = offersRepository.searchByDescriptionAndName(pageable, searchText);
 		}
-		return marks;
+		return offers;
 	}
 
 	public Page<Offer> getOffers(Pageable pageable) {
