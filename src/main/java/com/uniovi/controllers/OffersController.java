@@ -26,6 +26,7 @@ import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.services.OffersService;
 import com.uniovi.services.UsersService;
+import com.uniovi.validators.AddOfferValidator;
 
 @Controller
 public class OffersController {
@@ -35,6 +36,9 @@ public class OffersController {
 
 	@Autowired
 	private UsersService usersService;
+
+	@Autowired
+	private AddOfferValidator addOfferValidator;
 
 	@Autowired
 	private HttpSession httpSession;
@@ -95,15 +99,22 @@ public class OffersController {
 	@RequestMapping(value = "/offer/add", method = RequestMethod.GET)
 	public String getOffer(Model model) {
 		model.addAttribute("offer", new Offer());
-		return "offer/add";
-	}
-	
-	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-	public String getOffer(@Validated Offer offer, BindingResult result, Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
-		return "redirect:home";
+		return "/offer/add";
 	}
 
+	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
+	public String getOffer(@Validated Offer offer, BindingResult result, Model model) {
+		addOfferValidator.validate(offer, result);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		if (result.hasErrors()) {
+			return "/offer/add";
+		}
+		offer.setUser(activeUser);
+		offersService.addOffer(offer);
+		return "redirect:home";
+	}
 
 	/*
 	 * // PENDIENTE DE IMPLEMENTACIÓN
