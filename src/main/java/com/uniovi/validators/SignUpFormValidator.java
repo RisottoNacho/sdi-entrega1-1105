@@ -20,11 +20,15 @@ public class SignUpFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "Error.empty");
 		if (!EmailCheck.check(user.getEmail())) {
 			errors.rejectValue("email", "Error.signup.email.style");
 		}
 		if (usersService.getUserByEmail(user.getEmail()) != null) {
-			errors.rejectValue("dni", "Error.signup.email.duplicate");
+			errors.rejectValue("email", "Error.signup.email.duplicate");
 		}
 		if (user.getName().length() < 3 || user.getName().length() > 24) {
 			errors.rejectValue("name", "Error.signup.name.length");

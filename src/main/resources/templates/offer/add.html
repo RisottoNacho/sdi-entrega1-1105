@@ -14,6 +14,9 @@
 				<div class="col-sm-10">
 					<input type="number" class="form-control" name="title"
 						placeholder="Titulo corto de la oferta (18 caracteres)" required="true" />
+				<span
+						class="text-danger" th:if="${#fields.hasErrors('title')}"
+						th:errors="*{title}"/>
 				</div>
 			</div>
 			
@@ -22,6 +25,9 @@
 				<div class="col-sm-10">
 					<input type="number" class="form-control" name="description"
 						placeholder="Descripcion de la oferta (140 caracteres)) required="true" />
+				<span
+						class="text-danger" th:if="${#fields.hasErrors('description')}"
+						th:errors="*{description}"/>
 				</div>
 			</div>
 			
@@ -31,6 +37,9 @@
 				<div class="col-sm-10">
 					<input type="number" class="form-control" name="price"
 						placeholder="Precio al que vender la oferta" required="true" />
+				<span
+						class="text-danger" th:if="${#fields.hasErrors('price')}"
+						th:errors="*{price}"/>
 				</div>
 			</div>
 			

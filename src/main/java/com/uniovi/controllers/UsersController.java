@@ -1,10 +1,16 @@
 package com.uniovi.controllers;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.services.OffersService;
 import com.uniovi.services.RolesService;
@@ -80,11 +85,18 @@ public class UsersController {
 	}
 	
 	@RequestMapping(value = "/user/money", method = RequestMethod.GET)
-	public String getMoney() {
+	public void getMoney(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		String email = auth.getName();
+//		User activeUser = usersService.getUserByEmail(email);
+//		return Double.toString(activeUser.getMoney());
+		RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		return Double.toString(activeUser.getMoney());
+		request.getSession().setAttribute("balance", activeUser.getMoney());
+		redirectStrategy.sendRedirect(request, response, "/home");
+		
 	}
 
 	@RequestMapping(value = "/user/add")
