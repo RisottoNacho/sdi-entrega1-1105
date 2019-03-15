@@ -9,7 +9,7 @@
 		<form class="navbar-form" action="/offer/list">
 			<div class="form-group">
 				<input name="searchText" type="text" class="form-control" size="50"
-					placeholder="Buscar por títuo o descripción">
+					placeholder="Buscar por título o descripción">
 			</div>
 			<button type="submit" class="btn btn-default">Buscar</button>
 		</form>
@@ -44,65 +44,13 @@
 				</thead>
 				<tbody>
 					<tr th:each="offer : ${offerList}">
-						<td th:text="${offer.title}">1</td>
-						<td th:text="${offer.description}">Ejercicio 1</td>
-						<td th:text="${offer.price}">10</td>
-						<td><a th:href="${'/offer/details/' + offer.id}">detalles</a></td>
-						<td><a sec:authorize="hasRole('ROLE_USER')"
-							th:href="${'/offer/edit/' + offer.id}">modificar</a>
-
-							<div sec:authorize="hasRole('ROLE_USER')">
-								<div th:if="${offer.buy}">
-
-									<button type="button" th:id="${'resendButton' + offer.id}"
-										class="btn btn-info">Comprar</button>
-									<script th:inline="javascript">
-										/*<![CDATA[*/
-										$("#resendButton[[${offer.id}]]")
-												.click(
-														function() {
-															$
-																	.get(
-																			"/offer/[[${offer.id}]]/nobuy"",
-																			function(
-																					data) {
-																				var numberPage = [[${param.page}]];
-																				 var urlUpdate = '/offer/list/update';
-																				 if ( numberPage != null ){
-																				 urlUpdate += "?page="+numberPage[0];
-																				 }
-																				$("#tableOffers").load(urlUpdate);
-
-										/*]]>*/
-									</script>
-								</div>
-								<div sec:authorize="hasRole('ROLE_ADMIN')"
-									th:unless="${offer.buy}">
-									<button type="button" th:id="${'noresendButton' + offer.id}"
-										class="btn btn-default">Vendido</button>
-									<script th:inline="javascript">
-										/*<![CDATA[*/
-										$("#noresendButton[[${offer.id}]]")
-												.click(
-														function() {
-															$
-																	.get(
-																			"/offer/[[${offer.id}]]/buy",
-																			function(
-																					data) {
-																				var numberPage = [[${param.page}]];
-																				 var urlUpdate = '/offer/list/update';
-																				 if ( numberPage != null ){
-																				 urlUpdate += "?page="+numberPage[0];
-																				 }
-																				$("#tableOffers").load(urlUpdate);
-
-										/*]]>*/
-									</script>
-								</div>
-							</div></td>
-						<td><a sec:authorize="hasRole('ROLE_USER')"
-							th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>
+						<td th:text="${offer.title}"></td>
+						<td th:text="${offer.description}"></td>
+						<td th:text="${offer.price}"></td>
+						<td><a th:if = "!${offer.buy}" th:href="${'/offer/buy/' + offer.id}">Comprar</a></td>
+						<th><a th:if = "${offer.buy}">Vendido</a></th>
+						</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>

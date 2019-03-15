@@ -25,6 +25,9 @@ public interface OffersRepository extends CrudRepository<Offer, Long> {
 
 	@Query("SELECT r FROM Offer r WHERE r.user = ?1 ORDER BY r.id ASC ")
 	Page<Offer> findAllByUser(Pageable pageable, User user);
+	
+	@Query("SELECT r FROM Offer r WHERE r.user != ?1 ORDER BY r.id ASC ")
+	Page<Offer> findAllExceptUser(Pageable pageable, User user);
 
 	Page<Offer> findAll(Pageable pageable);
 

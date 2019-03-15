@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Controller;
@@ -35,11 +37,11 @@ public class OffersController {
 	private HttpSession httpSession;
 
 	@RequestMapping("/offer/list/update")
-	public String updateList(Model model,Pageable pageable, Principal principal) {
+	public String updateList(Model model, Pageable pageable, Principal principal) {
 		String email = principal.getName(); // DNI es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
-		model.addAttribute("offerList", offers.getContent() );
+		model.addAttribute("offerList", offers.getContent());
 		return "offer/list :: tableOffers";
 	}
 
@@ -52,16 +54,19 @@ public class OffersController {
 		if (searchText != null && !searchText.isEmpty()) {
 			offer = offersService.searchOffersByDescriptionAndNameForUser(pageable, searchText, user);
 		} else {
-			offer = offersService.getOffersForUser(pageable, user);
+			offer = offersService.getAllOffersExceptUser(pageable, user);
 		}
 		model.addAttribute("page", offer);
 		model.addAttribute("offerList", offer.getContent());
 		return "offer/list";
 	}
 
-	@RequestMapping(value = "/offer/{id}/buy", method = RequestMethod.GET)
+	@RequestMapping(value = "/offer/buy/{id}", method = RequestMethod.GET)
 	public String setResendTrue(Model model, @PathVariable Long id) {
-		offersService.setOfferBuyed(true, id);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		offersService.buyOffer(activeUser, id);
 		return "redirect:/offer/list";
 	}
 
@@ -77,13 +82,6 @@ public class OffersController {
 		return "redirect:/offer/list";
 	}
 
-	// remove later
-	@RequestMapping("/offer/details/{id}")
-	public String getDetail(Model model, @PathVariable Long id) {
-		model.addAttribute("mark", offersService.getOffer(id));
-		return "offer/details";
-	}
-
 	@RequestMapping("/offer/delete/{id}")
 	public String deleteOffer(@PathVariable Long id) {
 		offersService.deleteOffer(id);
@@ -96,23 +94,15 @@ public class OffersController {
 		return "offer/add";
 	}
 
-	// remove later
-	@RequestMapping(value = "/offer/edit/{id}")
-	public String getEdit(Model model, @PathVariable Long id) {
-		model.addAttribute("mark", offersService.getOffer(id));
-		model.addAttribute("usersList", usersService.getUsers());
-		return "offer/edit";
-	}
-
-	// PENDIENTE DE IMPLEMENTACIÓN
-	@RequestMapping(value = "/offer/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute Offer offer) {
-		Offer original = offersService.getOffer(id);
-		// modificar solo score y description
-		original.setScore(offer.getScore());
-		original.setDescription(offer.getDescription());
-		//offersService.getOffer(original);
-		return "redirect:/offer/details/" + id;
-	}
+	/*
+	 * // PENDIENTE DE IMPLEMENTACIÓN
+	 * 
+	 * @RequestMapping(value = "/offer/edit/{id}", method = RequestMethod.POST)
+	 * public String setEdit(Model model, @PathVariable Long id, @ModelAttribute
+	 * Offer offer) { Offer original = offersService.getOffer(id); // modificar solo
+	 * score y description original.setScore(offer.getScore());
+	 * original.setDescription(offer.getDescription());
+	 * //offersService.getOffer(original); return "redirect:/offer/details/" + id; }
+	 */
 
 }

@@ -20,7 +20,7 @@ public class Offer {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	private Boolean buyed = false;
+	private Boolean buy = false;
 
 	public Offer(Long id, String title, Date date, String description, Double price) {
 		super();
@@ -44,11 +44,11 @@ public class Offer {
 	}
 
 	public Boolean getResend() {
-		return buyed;
+		return buy;
 	}
 
 	public void setResend(Boolean resend) {
-		this.buyed = resend;
+		this.buy = resend;
 	}
 
 	public Long getId() {
@@ -79,12 +79,12 @@ public class Offer {
 		this.price = price;
 	}
 
-	public Boolean getBuyed() {
-		return buyed;
+	public Boolean getBuy() {
+		return buy;
 	}
 
-	public void setBuyed(Boolean buyed) {
-		this.buyed = buyed;
+	public void setBuy(Boolean buy) {
+		this.buy = buy;
 	}
 
 	public void setId(Long id) {

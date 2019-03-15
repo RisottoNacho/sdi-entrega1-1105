@@ -25,14 +25,11 @@ public class OffersService {
 
 	@Autowired
 	private HttpSession httpSession;
-/*
-	public List<Mark> getMarks() {
-		List<Mark> marks = new ArrayList<Mark>();
-		marksRepository.findAll().forEach(marks::add);
-		return marks;
-	}*/
+	/*
+	 * public List<Mark> getMarks() { List<Mark> marks = new ArrayList<Mark>();
+	 * marksRepository.findAll().forEach(marks::add); return marks; }
+	 */
 
-	
 	// METHOD NEEDS TO BE FIXED
 	public Page<Offer> getOffersForUser(Pageable pageable, User user) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
@@ -45,7 +42,17 @@ public class OffersService {
 		return offers;
 	}
 
-	
+	public Page<Offer> getAllOffersExceptUser(Pageable pageable, User user) {
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+		if (user.getRole().equals("ROLE_USER")) {
+			offers = offersRepository.findAllExceptUser(pageable, user);
+		}
+		if (user.getRole().equals("ROLE_ADMIN")) {
+			offers = offersRepository.findAll(pageable);
+		}
+		return offers;
+	}
+
 	public void setOfferBuyed(boolean buyed, Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
@@ -53,6 +60,19 @@ public class OffersService {
 		if (offer.getUser().getEmail().equals(email)) {
 			offersRepository.updateBuyed(buyed, id);
 		}
+	}
+	
+	public boolean buyOffer(User user,Long id) {
+		Offer offer = offersRepository.findById(id).get();
+		if(user.getMoney() >= offer.getPrice()) {
+			user.setMoney(user.getMoney()-offer.getPrice());
+			setOfferBuyed(true, id);
+			offersRepository.updateBuyed(true, id);
+			user.getOffers().add(offer);
+			usersRepository.save(user);
+			return true;
+		}
+		return false;
 	}
 
 	public Page<Offer> searchOffersByDescriptionAndNameForUser(Pageable pageable, String searchText, User user) {
@@ -71,7 +91,7 @@ public class OffersService {
 		Page<Offer> offers = offersRepository.findAll(pageable);
 		return offers;
 	}
-	
+
 	public Offer getOffer(Long id) {
 		@SuppressWarnings("unchecked")
 		Set<Offer> consultedList = (Set<Offer>) httpSession.getAttribute("consultedList");
