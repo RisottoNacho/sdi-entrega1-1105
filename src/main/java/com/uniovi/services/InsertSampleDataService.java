@@ -29,20 +29,23 @@ public class InsertSampleDataService {
 		user6.setPassword("admin");
 		user6.setRole(rolesService.getRoles()[1]);
 
+		@SuppressWarnings("rawtypes")
 		Set user1Offers = new HashSet<Offer>() {
+			private static final long serialVersionUID = 1L;
+
 			{
 				add(new Offer("Vendo Play 2 chipeada",new Date(System.currentTimeMillis()),"Bendo play 2 totalmente jakiada con chip y todos los juegos",20.0,user1));
 				add(new Offer("Vendo Opel Corsa",new Date(System.currentTimeMillis()),"Sólo 432543 yardas, opel corsa rojo en perfecto estado",50.0,user1));
 			}
 		};
-		user1.setMarks(user1Offers);
+		user1.setOffers(user1Offers);
 		Set user2Offers = new HashSet<Offer>() {
 			{
 				add(new Offer("Cenizas de mi abuelo",new Date(System.currentTimeMillis()),"No me vienen haciendo falta en casa así que pa quien las quiera",5.0,user2));
 				add(new Offer("Plutón",new Date(System.currentTimeMillis()),"Vendo plutón para quien lo quiera, se lo cambié a un niño por chicles",60.0,user2));
 			}
 		};
-		user2.setMarks(user2Offers);
+		user2.setOffers(user2Offers);
 		
 		usersService.addUser(user1);
 		usersService.addUser(user2);

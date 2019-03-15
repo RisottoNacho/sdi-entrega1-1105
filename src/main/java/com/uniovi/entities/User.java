@@ -22,7 +22,7 @@ public class User {
 	private String role;
 	private double money;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Offer> marks;
+	private Set<Offer> offers;
 
 	private String password;
 	@Transient // propiedad que no se almacena e la tabla.
@@ -105,12 +105,12 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public void setMarks(Set<Offer> marks) {
-		this.marks = marks;
+	public void setOffers(Set<Offer> offers) {
+		this.offers = offers;
 	}
 
-	public Set<Offer> getMarks() {
-		return marks;
+	public Set<Offer> getOffers() {
+		return offers;
 	}
 
 	public String getFullName() {
