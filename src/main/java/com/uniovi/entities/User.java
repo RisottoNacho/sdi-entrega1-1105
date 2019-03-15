@@ -20,6 +20,7 @@ public class User {
 	private String name;
 	private String lastName;
 	private String role;
+	private double money;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Offer> marks;
 
@@ -32,9 +33,20 @@ public class User {
 		this.email = email;
 		this.name = name;
 		this.lastName = lastName;
+		money = 100;
 	}
 
 	public User() {
+		money = 100;
+	}
+	
+
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
+		this.money = money;
 	}
 
 	public long getId() {

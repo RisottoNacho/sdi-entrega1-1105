@@ -37,7 +37,7 @@ public class OffersService {
 		if (user.getRole().equals("ROLE_STUDENT")) {
 			offers = offersRepository.findAllByUser(pageable, user);
 		}
-		if (user.getRole().equals("ROLE_PROFESSOR")) {
+		if (user.getRole().equals("ROLE_ADMIN")) {
 			offers = getOffers(pageable);
 		}
 		return offers;

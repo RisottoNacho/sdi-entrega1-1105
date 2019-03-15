@@ -1,5 +1,6 @@
 package com.uniovi.services;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.PostConstruct;
@@ -18,60 +19,33 @@ public class InsertSampleDataService {
 
 	@PostConstruct
 	public void init() {
-		User user1 = new User("99999990A", "Pedro", "Díaz");
+		User user1 = new User("1@a.com", "Barack", "Obama");
 		user1.setPassword("123456");
 		user1.setRole(rolesService.getRoles()[0]);
-		User user2 = new User("99999991B", "Lucas", "Núñez");
+		User user2 = new User("2@a.com", "Paco", "Sanz");
 		user2.setPassword("123456");
 		user2.setRole(rolesService.getRoles()[0]);
-		User user3 = new User("99999992C", "María", "Rodríguez");
-		user3.setPassword("123456");
-		user3.setRole(rolesService.getRoles()[0]);
-		User user4 = new User("99999993D", "Marta", "Almonte");
-		user4.setPassword("123456");
-		User user6 = new User("admin@email.com", "Edward", "Núñez");
+		User user6 = new User("admin@email.com", "Paco", "Mermela");
 		user6.setPassword("admin");
 		user6.setRole(rolesService.getRoles()[1]);
 
-		Set user1Marks = new HashSet<Offer>() {
+		Set user1Offers = new HashSet<Offer>() {
 			{
-				add(new Offer("Nota A1", 10.0, user1));
-				add(new Offer("Nota A2", 9.0, user1));
-				add(new Offer("Nota A3", 7.0, user1));
-				add(new Offer("Nota A4", 6.5, user1));
+				add(new Offer("Vendo Play 2 chipeada",new Date(System.currentTimeMillis()),"Bendo play 2 totalmente jakiada con chip y todos los juegos",20.0,user1));
+				add(new Offer("Vendo Opel Corsa",new Date(System.currentTimeMillis()),"Sólo 432543 yardas, opel corsa rojo en perfecto estado",50.0,user1));
 			}
 		};
-		user1.setMarks(user1Marks);
-		Set user2Marks = new HashSet<Offer>() {
+		user1.setMarks(user1Offers);
+		Set user2Offers = new HashSet<Offer>() {
 			{
-				add(new Offer("Nota B1", 5.0, user2));
-				add(new Offer("Nota B2", 4.3, user2));
-				add(new Offer("Nota B3", 8.0, user2));
-				add(new Offer("Nota B4", 3.5, user2));
+				add(new Offer("Cenizas de mi abuelo",new Date(System.currentTimeMillis()),"No me vienen haciendo falta en casa así que pa quien las quiera",5.0,user2));
+				add(new Offer("Plutón",new Date(System.currentTimeMillis()),"Vendo plutón para quien lo quiera, se lo cambié a un niño por chicles",60.0,user2));
 			}
 		};
-		user2.setMarks(user2Marks);
-		Set user3Marks = new HashSet<Offer>() {
-			{
-				;
-				add(new Offer("Nota C1", 5.5, user3));
-				add(new Offer("Nota C2", 6.6, user3));
-				add(new Offer("Nota C3", 7.0, user3));
-			}
-		};
-		user3.setMarks(user3Marks);
-		Set user4Marks = new HashSet<Offer>() {
-			{
-				add(new Offer("Nota D1", 10.0, user4));
-				add(new Offer("Nota D2", 8.0, user4));
-				add(new Offer("Nota D3", 9.0, user4));
-			}
-		};
-		user4.setMarks(user4Marks);
+		user2.setMarks(user2Offers);
+		
 		usersService.addUser(user1);
 		usersService.addUser(user2);
-		usersService.addUser(user3);
-		usersService.addUser(user4);
 		usersService.addUser(user6);
 	}
 }

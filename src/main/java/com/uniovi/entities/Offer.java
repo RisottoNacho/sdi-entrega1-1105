@@ -22,19 +22,21 @@ public class Offer {
 	private User user;
 	private Boolean buyed = false;
 
-	public Offer(Long id, String title, Date date, String description, Double score) {
+	public Offer(Long id, String title, Date date, String description, Double price) {
 		super();
 		this.id = id;
 		this.description = description;
-		this.price = score;
+		this.price = price;
 		this.date = date;
 		this.title = title;
 	}
 
-	public Offer(String description, Double score, User user) {
+	public Offer(String title, Date date, String description, Double price, User user) {
 		super();
 		this.description = description;
-		this.price = score;
+		this.price = price;
+		this.date = date;
+		this.title = title;
 		this.user = user;
 	}
 

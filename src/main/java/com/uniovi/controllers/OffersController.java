@@ -39,8 +39,8 @@ public class OffersController {
 		String email = principal.getName(); // DNI es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
-		model.addAttribute("markList", offers.getContent() );
-		return "mark/list :: tableMarks";
+		model.addAttribute("offerList", offers.getContent() );
+		return "offer/list :: tableOffers";
 	}
 
 	@RequestMapping("/offer/list")
@@ -48,14 +48,14 @@ public class OffersController {
 			@RequestParam(value = "", required = false) String searchText) {
 		String email = principal.getName(); // DNI es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
-		Page<Offer> marks = new PageImpl<Offer>(new LinkedList<Offer>());
+		Page<Offer> offer = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (searchText != null && !searchText.isEmpty()) {
-			marks = offersService.searchOffersByDescriptionAndNameForUser(pageable, searchText, user);
+			offer = offersService.searchOffersByDescriptionAndNameForUser(pageable, searchText, user);
 		} else {
-			marks = offersService.getOffersForUser(pageable, user);
+			offer = offersService.getOffersForUser(pageable, user);
 		}
-		model.addAttribute("page", marks);
-		model.addAttribute("markList", marks.getContent());
+		model.addAttribute("page", offer);
+		model.addAttribute("offerList", offer.getContent());
 		return "offer/list";
 	}
 
@@ -72,11 +72,12 @@ public class OffersController {
 	}
 
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-	public String setOffer(@ModelAttribute Offer mark) {
-		offersService.addOffer(mark);
+	public String setOffer(@ModelAttribute Offer offer) {
+		offersService.addOffer(offer);
 		return "redirect:/offer/list";
 	}
 
+	// remove later
 	@RequestMapping("/offer/details/{id}")
 	public String getDetail(Model model, @PathVariable Long id) {
 		model.addAttribute("mark", offersService.getOffer(id));
@@ -95,6 +96,7 @@ public class OffersController {
 		return "offer/add";
 	}
 
+	// remove later
 	@RequestMapping(value = "/offer/edit/{id}")
 	public String getEdit(Model model, @PathVariable Long id) {
 		model.addAttribute("mark", offersService.getOffer(id));
