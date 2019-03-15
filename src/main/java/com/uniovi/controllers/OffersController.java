@@ -82,24 +82,24 @@ public class OffersController {
 		offersService.setOfferBuyed(false, id);
 		return "redirect:/offer/list";
 	}
-
+	
+	@RequestMapping(value = "/offer/add", method = RequestMethod.GET)
+	public String getOffer(Model model) {
+		model.addAttribute("offer", new Offer());
+		return "/offer/add";
+	}
+/*
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
 	public String setOffer(@ModelAttribute Offer offer) {
 		offer.setDate(new Date(System.currentTimeMillis()));
 		offersService.addOffer(offer);
 		return "redirect:/offer/list";
-	}
+	}*/
 
 	@RequestMapping("/offer/delete/{id}")
 	public String deleteOffer(@PathVariable Long id) {
 		offersService.deleteOffer(id);
 		return "redirect:/offer/list";
-	}
-
-	@RequestMapping(value = "/offer/add", method = RequestMethod.GET)
-	public String getOffer(Model model) {
-		model.addAttribute("offer", new Offer());
-		return "/offer/add";
 	}
 
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
@@ -111,9 +111,10 @@ public class OffersController {
 		if (result.hasErrors()) {
 			return "/offer/add";
 		}
+		offer.setDate(new Date(System.currentTimeMillis()));
 		offer.setUser(activeUser);
 		offersService.addOffer(offer);
-		return "redirect:home";
+		return "redirect:/home";
 	}
 
 	/*
