@@ -1,18 +1,21 @@
 package com.uniovi.controllers;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.LinkedList;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,6 +81,7 @@ public class OffersController {
 
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
 	public String setOffer(@ModelAttribute Offer offer) {
+		offer.setDate(new Date(System.currentTimeMillis()));
 		offersService.addOffer(offer);
 		return "redirect:/offer/list";
 	}
@@ -88,11 +92,18 @@ public class OffersController {
 		return "redirect:/offer/list";
 	}
 
-	@RequestMapping(value = "/offer/add")
+	@RequestMapping(value = "/offer/add", method = RequestMethod.GET)
 	public String getOffer(Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
+		model.addAttribute("offer", new Offer());
 		return "offer/add";
 	}
+	
+	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
+	public String getOffer(@Validated Offer offer, BindingResult result, Model model) {
+		model.addAttribute("usersList", usersService.getUsers());
+		return "redirect:home";
+	}
+
 
 	/*
 	 * // PENDIENTE DE IMPLEMENTACIÓN

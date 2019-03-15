@@ -12,7 +12,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="pwd">Título:</label>
 				<div class="col-sm-10">
-					<input type="number" class="form-control" name="title"
+					<input type="text" class="form-control" name="title"
 						placeholder="Titulo corto de la oferta (18 caracteres)" required="true" />
 				<span
 						class="text-danger" th:if="${#fields.hasErrors('title')}"
@@ -23,8 +23,8 @@
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="pwd">Descripción:</label>
 				<div class="col-sm-10">
-					<input type="number" class="form-control" name="description"
-						placeholder="Descripcion de la oferta (140 caracteres)) required="true" />
+					<input type="text" class="form-control" name="description"
+						placeholder="Descripcion de la oferta (140 caracteres)" required="true" />
 				<span
 						class="text-danger" th:if="${#fields.hasErrors('description')}"
 						th:errors="*{description}"/>
