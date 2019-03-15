@@ -5,33 +5,61 @@
 	<nav th:replace="fragments/nav" />
 	<div class="container" style="text-align: center">
 		<h2 th:text="#{welcome.message}"></h2>
-		<h3>Esta es una zona privada la webb</h3>
+		<h3>Este es su perfil privado</h3>
 		<p>
-			Usuario Autenticado como : <span
+			Usuario autenticado como : <span
 				sec:authentication="principal.username" th:inline="text"> </span>
 		</p>
 
-		<p>ofertas del usuario</p>
+		<p>
+			Su saldo actual es de: <span th:txt="${'/user/money'}"> </span> €
+		</p>
+		<strong>Estas son sus ofertas a la venta</strong>
 		<div class="table-responsive" style="text-align: left">
 			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th class="col-md-2">Título</th>
 						<th>Descripción</th>
+						<th>Precio</th>
 						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="offer : ${offerList}">
-						<td th:text="${offer.title}">1</td>
-						<td th:text="${offer.description}">Ejercicio 1</td>
-						<td th:text="${offer.score}">10</td>
+						<td th:text="${offer.title}"></td>
+						<td th:text="${offer.description}"></td>
+						<td th:text="${offer.score}"></td>
 						<td><a th:href="${'/offer/delete/' + offer.id}">eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
+	</div>
+	<div class="container" style="text-align: center">
+		<strong>Estas son sus ofertas compradas</strong>
+
+		<div class="table-responsive" style="text-align: left">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th class="col-md-2">Título</th>
+						<th>Descripción</th>
+						<th>Precio</th>
+						<th>Vendedor</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="offer : ${buyedList}">
+						<td th:text="${offer.title}">1</td>
+						<td th:text="${offer.description}"></td>
+						<td th:text="${offer.score}"></td>
+						<td th:text="${offer.user.name +' '+offer.user.lastName}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<footer th:replace="fragments/footer" />
 </body>

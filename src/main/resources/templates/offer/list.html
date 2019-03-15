@@ -15,19 +15,19 @@
 		</form>
 		<p>Las ofertas que actualmente figuran en el sistema son las
 			siguientes:</p>
-		<button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
+		<!-- x<button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
 		<script th:inline="javascript">
- /*<![CDATA[*/
-		$( "#updateButton" ).click(function() {
- var numberPage = [[${param.page}]];
- var urlUpdate = '/offer/list/update';
- if (numberPage != null ){
- urlUpdate += "?page="+numberPage[0];
- }
- $("#tableOffers").load(urlUpdate);
- });
- /*]]>*/
-		</script>
+		 /*<![CDATA[*/
+				$( "#updateButton" ).click(function() {
+		 var numberPage = [[${param.page}]];
+		 var urlUpdate = '/offer/list/update';
+		 if (numberPage != null ){
+		 urlUpdate += "?page="+numberPage[0];
+		 }
+		 $("#tableOffers").load(urlUpdate);
+		 });
+		 /*]]>*/
+		</script>-->
 
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tableOffers"
@@ -37,7 +37,7 @@
 						<th class="col-md-2">Título</th>
 						<th>Descripción</th>
 						<th>Precio</th>
-						<th class="col-md-1"></th>
+						<th>Vendedor</th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 					</tr>
@@ -47,8 +47,9 @@
 						<td th:text="${offer.title}"></td>
 						<td th:text="${offer.description}"></td>
 						<td th:text="${offer.price}"></td>
-						<td><a th:if = "!${offer.buy}" th:href="${'/offer/buy/' + offer.id}">Comprar</a></td>
-						<th><a th:if = "${offer.buy}">Vendido</a></th>
+						<td th:text="${offer.user.name +' '+offer.user.lastName}"></td>
+						<td><a th:if = "!${offer.buyed}" th:href="${'/offer/buy/' + offer.id}">Comprar</a></td>
+						<th><a th:if = "${offer.buyed}">Vendido</a></th>
 						</div>
 						</td>
 					</tr>

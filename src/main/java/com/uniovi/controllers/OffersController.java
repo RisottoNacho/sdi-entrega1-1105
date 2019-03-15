@@ -52,7 +52,7 @@ public class OffersController {
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offer = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (searchText != null && !searchText.isEmpty()) {
-			offer = offersService.searchOffersByDescriptionAndNameForUser(pageable, searchText, user);
+			offer = offersService.searchOffersByDescriptionAndNameExceptUser(pageable, searchText, user);
 		} else {
 			offer = offersService.getAllOffersExceptUser(pageable, user);
 		}

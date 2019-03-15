@@ -1,6 +1,7 @@
 package com.uniovi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.services.OffersService;
 import com.uniovi.services.RolesService;
@@ -26,7 +28,7 @@ public class UsersController {
 	private UsersService usersService;
 
 	@Autowired
-	private OffersService oService;
+	private OffersService offersService;
 
 	@Autowired
 	private SecurityService securityService;
@@ -48,7 +50,9 @@ public class UsersController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		model.addAttribute("offerList", oService.getOffersForUser(pageable, activeUser));
+		model.addAttribute("offerList", offersService.getOffersForUser(pageable, activeUser));
+		
+		model.addAttribute("buyedList", offersService.getOffersBuyedByUser(pageable, activeUser));
 		return "home";
 	}
 
@@ -74,6 +78,14 @@ public class UsersController {
 		model.addAttribute("usersList", usersService.getUsers());
 		return "user/list";
 	}
+	
+	@RequestMapping(value = "/user/money", method = RequestMethod.GET)
+	public String getMoney() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		return Double.toString(activeUser.getMoney());
+	}
 
 	@RequestMapping(value = "/user/add")
 	public String getUser(Model model) {
@@ -85,12 +97,6 @@ public class UsersController {
 	public String setUser(@ModelAttribute User user) {
 		usersService.addUser(user);
 		return "redirect:/user/list";
-	}
-
-	@RequestMapping("/user/details/{id}")
-	public String getDetail(Model model, @PathVariable Long id) {
-		model.addAttribute("user", usersService.getUser(id));
-		return "user/details";
 	}
 
 	@RequestMapping("/user/delete/{id}")

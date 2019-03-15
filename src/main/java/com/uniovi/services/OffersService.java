@@ -7,9 +7,9 @@ import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,11 +17,15 @@ import org.springframework.stereotype.Service;
 import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.OffersRepository;
+import com.uniovi.repositories.UsersRepository;
 
 @Service
 public class OffersService {
 	@Autowired
 	private OffersRepository offersRepository;
+
+	@Autowired
+	private UsersRepository usersRepository;
 
 	@Autowired
 	private HttpSession httpSession;
@@ -42,6 +46,14 @@ public class OffersService {
 		return offers;
 	}
 
+	public Page<Offer> getOffersBuyedByUser(Pageable pageable, User user) {
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+		if (user.getRole().equals("ROLE_USER")) {
+			offers = offersRepository.findAllBuyedByUser(pageable, user.getEmail());
+		}
+		return offers;
+	}
+
 	public Page<Offer> getAllOffersExceptUser(Pageable pageable, User user) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (user.getRole().equals("ROLE_USER")) {
@@ -56,18 +68,14 @@ public class OffersService {
 	public void setOfferBuyed(boolean buyed, Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
-		Offer offer = offersRepository.findById(id).get();
-		if (offer.getUser().getEmail().equals(email)) {
-			offersRepository.updateBuyed(buyed, id);
-		}
+		offersRepository.updateBuyed(buyed, id, email);
 	}
-	
-	public boolean buyOffer(User user,Long id) {
+
+	public boolean buyOffer(User user, Long id) {
 		Offer offer = offersRepository.findById(id).get();
-		if(user.getMoney() >= offer.getPrice()) {
-			user.setMoney(user.getMoney()-offer.getPrice());
+		if (user.getMoney() >= offer.getPrice()) {
+			user.setMoney(user.getMoney() - offer.getPrice());
 			setOfferBuyed(true, id);
-			offersRepository.updateBuyed(true, id);
 			user.getOffers().add(offer);
 			usersRepository.save(user);
 			return true;
@@ -75,13 +83,24 @@ public class OffersService {
 		return false;
 	}
 
-	public Page<Offer> searchOffersByDescriptionAndNameForUser(Pageable pageable, String searchText, User user) {
+	/*
+	 * public Page<Offer> searchOffersByDescriptionAndNameForUser(Pageable pageable,
+	 * String searchText, User user) { Page<Offer> offers = new PageImpl<Offer>(new
+	 * LinkedList<Offer>()); searchText = "%" + searchText + "%"; if
+	 * (user.getRole().equals("ROLE_STUDENT")) { offers =
+	 * offersRepository.searchByDescriptionNameAndUser(pageable, searchText, user);
+	 * } if (user.getRole().equals("ROLE_PROFESSOR")) { offers =
+	 * offersRepository.searchByDescriptionAndName(pageable, searchText); } return
+	 * offers; }
+	 */
+
+	public Page<Offer> searchOffersByDescriptionAndNameExceptUser(Pageable pageable, String searchText, User user) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		searchText = "%" + searchText + "%";
-		if (user.getRole().equals("ROLE_STUDENT")) {
-			offers = offersRepository.searchByDescriptionNameAndUser(pageable, searchText, user);
+		if (user.getRole().equals("ROLE_USER")) {
+			offers = offersRepository.searchByTitleDescriptionNameExceptUser(pageable, searchText, user);
 		}
-		if (user.getRole().equals("ROLE_PROFESSOR")) {
+		if (user.getRole().equals("ROLE_ADMIN")) {
 			offers = offersRepository.searchByDescriptionAndName(pageable, searchText);
 		}
 		return offers;
