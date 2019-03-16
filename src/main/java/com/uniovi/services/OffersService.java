@@ -46,7 +46,7 @@ public class OffersService {
 		}
 		return offers;
 	}
-	
+
 	public List<Offer> getOffersForUserNoPageable(User user) {
 		List<Offer> offers = new LinkedList<Offer>();
 		if (user.getRole().equals("ROLE_USER")) {
@@ -62,7 +62,7 @@ public class OffersService {
 		}
 		return offers;
 	}
-	
+
 	public List<Offer> getOffersBuyedByUserNoPageable(User user) {
 		List<Offer> offers = new LinkedList<Offer>();
 		if (user.getRole().equals("ROLE_USER")) {
@@ -94,7 +94,7 @@ public class OffersService {
 			user.setMoney(user.getMoney() - offer.getPrice());
 			setOfferBuyed(true, id);
 			User seller = offer.getUser();
-			seller.setMoney(seller.getMoney()+offer.getPrice());
+			seller.setMoney(seller.getMoney() + offer.getPrice());
 			user.getOffers().add(offer);
 			usersRepository.save(user);
 			usersRepository.save(seller);
@@ -148,8 +148,11 @@ public class OffersService {
 		offersRepository.save(offer);
 	}
 
-	public void deleteOffer(Long id) {
-		offersRepository.deleteById(id);
+	public void deleteOffer(Long id, User user) {
+		for (Offer o : user.getOffers()) {
+			if (o.getId() == id)
+				offersRepository.deleteById(id);
+		}
 	}
 
 }

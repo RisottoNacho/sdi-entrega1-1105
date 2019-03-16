@@ -102,7 +102,10 @@ public class OffersController {
 
 	@RequestMapping("/offer/delete/{id}")
 	public String deleteOffer(@PathVariable Long id) {
-		offersService.deleteOffer(id);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		offersService.deleteOffer(id,activeUser);
 		return "redirect:/home";
 	}
 

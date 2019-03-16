@@ -1,20 +1,15 @@
 package com.uniovi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.OffersService;
@@ -56,7 +51,7 @@ public class UsersController {
 		model.addAttribute("buyedList", offersService.getOffersBuyedByUserNoPageable(activeUser));
 		return "home";
 	}
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Validated User user, BindingResult result, Model model) {
 		signUpFormValidator.validate(user, result);
@@ -76,39 +71,19 @@ public class UsersController {
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		model.addAttribute("usersList", usersService.getUsers(activeUser));
 		return "user/list";
-	}
-
-	@RequestMapping(value = "/user/add")
-	public String getUser(Model model) {
-		model.addAttribute("rolesList", rolesService.getRoles());
-		return "user/add";
-	}
-
-	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
-	public String setUser(@ModelAttribute User user) {
-		usersService.addUser(user);
-		return "redirect:/user/list";
 	}
 
 	@RequestMapping("/user/delete/{id}")
 	public String delete(@PathVariable Long id) {
-		usersService.deleteUser(id);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		usersService.deleteUser(id,activeUser);
 		return "redirect:/user/list";
-	}
-
-	@RequestMapping(value = "/user/edit/{id}")
-	public String getEdit(Model model, @PathVariable Long id) {
-		User user = usersService.getUser(id);
-		model.addAttribute("user", user);
-		return "user/edit";
-	}
-
-	@RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute User user) {
-		user.setId(id);
-		usersService.addUser(user);
-		return "redirect:/user/details/" + id;
 	}
 }

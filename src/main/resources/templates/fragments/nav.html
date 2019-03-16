@@ -27,13 +27,12 @@
 						Gestión de Usuarios <span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/user/add">Agregar usuario</a></li>
 						<li><a href="/user/list">Ver Usuarios</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" href="foo">
 				<li class="list-group-item-text" id="foo"
-					sec:authorize="isAuthenticated()"
+					sec:authorize="isAuthenticated() && hasRole('ROLE_USER')"
 					style="text-align: center; font-size: 15px; color: #d3dbd7;"><a><span
 						sec:authentication="principal.username" th:inline="text"> </span>
 						: <span th:text="${money}" th:inline="text"> </span> €</a></li>

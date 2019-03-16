@@ -4,7 +4,7 @@
 <body>
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
-	<div class="container">
+	<div class="container" sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')">
 		<h2>Usuarios</h2>
 		<p>Los usuarios que actualmente figuran en el sistema son los
 			siguientes:</p>
@@ -17,21 +17,15 @@
 						<th>Apellidos</th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${usersList}">
-						<td th:text="${user.email}">71888888X</td>
-						<td th:text="${user.name}">Nombre del alumno</td>
-						<td th:text="${user.lastName}">Apellidos del alumno</td>
-						<td><a th:href="${'/user/details/' + user.id}">detalles</a></td>
-						<td><a sec:authorize="hasRole('ROLE_PROFESSOR')"
-							th:href="${'/user/edit/' + user.id}">modificar</a></td>
-						<td><a sec:authorize="hasRole('ROLE_PROFESSOR')"
-							th:href="${'/user/delete/' + user.id}">eliminar</a></td>
+						<td th:text="${user.email}"></td>
+						<td th:text="${user.name}"></td>
+						<td th:text="${user.lastName}"></td>
+						<td><a
+							th:href="${'/user/delete/' + user.id}">Eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>
