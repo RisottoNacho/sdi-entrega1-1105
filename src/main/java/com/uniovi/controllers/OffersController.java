@@ -69,13 +69,13 @@ public class OffersController {
 		return "offer/list";
 	}
 
-	@RequestMapping(value = "/offer/buy/{id}", method = RequestMethod.GET)
-	public String setResendTrue(Model model, @PathVariable Long id, Pageable pageable) {
+	@RequestMapping(value = "/offer/buy/{id}-{page}", method = RequestMethod.GET)
+	public String setResendTrue(Model model, @PathVariable Long id, @PathVariable int page) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		offersService.buyOffer(activeUser, id);
-		return "redirect:/offer/list" + "?page=" + pageable.getPageNumber();
+		return "redirect:/offer/list" + "?page=" + page;
 	}
 
 	@RequestMapping(value = "/offer/{id}/nobuy", method = RequestMethod.GET)

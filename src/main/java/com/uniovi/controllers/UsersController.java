@@ -45,18 +45,6 @@ public class UsersController {
 		model.addAttribute("user", new User());
 		return "signup";
 	}
-/*
-	@RequestMapping(value = "/userMoney", method = RequestMethod.GET)
-	@ResponseBody
-	public String getMoney(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-		model.addAttribute("userMoney", Double.toString(activeUser.getMoney()));
-		return Double.toString(activeUser.getMoney());
-	}*/
-
-
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
@@ -68,16 +56,7 @@ public class UsersController {
 		model.addAttribute("buyedList", offersService.getOffersBuyedByUserNoPageable(activeUser));
 		return "home";
 	}
-/*
-	@GetMapping("/home")
-	public String getMoney(@RequestParam(name = "money", required = false) double money, Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-		model.addAttribute("money", activeUser.getMoney());
-		return "money";
-	}
-	*/
+	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Validated User user, BindingResult result, Model model) {
 		signUpFormValidator.validate(user, result);
