@@ -120,9 +120,6 @@ public class OffersService {
 		if (user.getRole().equals("ROLE_USER")) {
 			offers = offersRepository.searchByTitleDescriptionNameExceptUser(pageable, searchText, user);
 		}
-		if (user.getRole().equals("ROLE_ADMIN")) {
-			offers = offersRepository.searchByDescriptionAndName(pageable, searchText);
-		}
 		return offers;
 	}
 

@@ -4,7 +4,8 @@
 <body>
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
-	<div class="container" sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')">
+	<div class="container"
+		sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')">
 		<h2>Usuarios</h2>
 		<p>Los usuarios que actualmente figuran en el sistema son los
 			siguientes:</p>
@@ -24,8 +25,7 @@
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.name}"></td>
 						<td th:text="${user.lastName}"></td>
-						<td><a
-							th:href="${'/user/delete/' + user.id}">Eliminar</a></td>
+						<td><a th:href="${'/user/delete/' + user.id}">Eliminar</a></td>
 					</tr>
 				</tbody>
 			</table>
