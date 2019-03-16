@@ -57,14 +57,14 @@ public class OffersController {
 			@RequestParam(value = "", required = false) String searchText) {
 		String email = principal.getName(); // DNI es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
-		Page<Offer> offer = new PageImpl<Offer>(new LinkedList<Offer>());
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (searchText != null && !searchText.isEmpty()) {
-			offer = offersService.searchOffersByDescriptionAndNameExceptUser(pageable, searchText, user);
+			offers = offersService.searchOffersByDescriptionAndNameExceptUser(pageable, searchText, user);
 		} else {
-			offer = offersService.getAllOffersExceptUser(pageable, user);
+			offers = offersService.getAllOffersExceptUser(pageable, user);
 		}
-		model.addAttribute("page", offer);
-		model.addAttribute("offerList", offer.getContent());
+		model.addAttribute("page", offers);
+		model.addAttribute("offerList", offers.getContent());
 		return "offer/list";
 	}
 
