@@ -12,13 +12,13 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/home">Home</a></li>
-				<li sec:authorize="hasRole('ROLE_USER')" id="offers-menu" class="dropdown"><a class="dropdown-toggle"
+				<li sec:authorize="hasRole('ROLE_USER')" id="offers-menu"
+					class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> Gestión de ofertas <span
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a
-							href="/offer/add">Agregar Oferta</a></li>
+						<li><a href="/offer/add">Agregar Oferta</a></li>
 						<li><a href="/offer/list">Ver Ofertas</a></li>
 					</ul></li>
 				<li id="users-menu" class="dropdown"
@@ -31,9 +31,14 @@
 						<li><a href="/user/list">Ver Usuarios</a></li>
 					</ul></li>
 			</ul>
-			<ul class="nav navbar-nav navbar-right">
+			<ul class="nav navbar-nav navbar-right" href="foo">
+				<li class="list-group-item-text" id="foo"
+					sec:authorize="isAuthenticated()"
+					style="text-align: center; font-size: 15px; color: #d3dbd7;"><a><span
+						sec:authentication="principal.username" th:inline="text"> </span>
+						: <span th:text="${money}" th:inline="text"> </span> €</a></li>
 				<li class="dropdown"><a id="btnLanguage" href="
- #"
+#"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"
 					aria-haspopup="true" aria-expanded="false"> <span
 						th:text="#{language.change}"></span> <span class="caret"></span>
@@ -50,6 +55,7 @@
 								th:text="#{language.es}">Español</span>
 						</a></li>
 					</ul></li>
+
 
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
 					th:text="#{signup.message}"> <span

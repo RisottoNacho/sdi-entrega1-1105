@@ -18,4 +18,9 @@ footer {
 	text-align: center;
 	line-height: 60px
 }
+
+#foo {
+    align-items: center;
+    display: flex;
+}
 /* Sticky footer styles-------------------------------------------------- */

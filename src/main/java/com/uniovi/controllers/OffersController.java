@@ -51,8 +51,6 @@ public class OffersController {
 		model.addAttribute("offerList", offers.getContent());
 		return "offer/list :: tableOffers";
 	}
-	
-
 
 	@RequestMapping("/offer/list")
 	public String getList(Model model, Pageable pageable, Principal principal,
@@ -65,18 +63,19 @@ public class OffersController {
 		} else {
 			offers = offersService.getAllOffersExceptUser(pageable, user);
 		}
+		model.addAttribute("money", user.getMoney());
 		model.addAttribute("page", offers);
 		model.addAttribute("offerList", offers.getContent());
 		return "offer/list";
 	}
 
 	@RequestMapping(value = "/offer/buy/{id}", method = RequestMethod.GET)
-	public String setResendTrue(Model model, @PathVariable Long id) {
+	public String setResendTrue(Model model, @PathVariable Long id, Pageable pageable) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		offersService.buyOffer(activeUser, id);
-		return "redirect:/offer/list";
+		return "redirect:/offer/list" + "?page=" + pageable.getPageNumber();
 	}
 
 	@RequestMapping(value = "/offer/{id}/nobuy", method = RequestMethod.GET)
@@ -84,19 +83,22 @@ public class OffersController {
 		offersService.setOfferBuyed(false, id);
 		return "redirect:/offer/list";
 	}
-	
+
 	@RequestMapping(value = "/offer/add", method = RequestMethod.GET)
 	public String getOffer(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
 		model.addAttribute("offer", new Offer());
+		model.addAttribute("money", activeUser.getMoney());
 		return "/offer/add";
 	}
-/*
-	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-	public String setOffer(@ModelAttribute Offer offer) {
-		offer.setDate(new Date(System.currentTimeMillis()));
-		offersService.addOffer(offer);
-		return "redirect:/offer/list";
-	}*/
+	/*
+	 * @RequestMapping(value = "/offer/add", method = RequestMethod.POST) public
+	 * String setOffer(@ModelAttribute Offer offer) { offer.setDate(new
+	 * Date(System.currentTimeMillis())); offersService.addOffer(offer); return
+	 * "redirect:/offer/list"; }
+	 */
 
 	@RequestMapping("/offer/delete/{id}")
 	public String deleteOffer(@PathVariable Long id) {
