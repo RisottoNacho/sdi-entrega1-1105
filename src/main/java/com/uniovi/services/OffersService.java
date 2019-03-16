@@ -41,9 +41,6 @@ public class OffersService {
 		if (user.getRole().equals("ROLE_USER")) {
 			offers = offersRepository.findAllByUser(pageable, user);
 		}
-		if (user.getRole().equals("ROLE_ADMIN")) {
-			offers = getOffers(pageable);
-		}
 		return offers;
 	}
 
@@ -76,21 +73,18 @@ public class OffersService {
 		if (user.getRole().equals("ROLE_USER")) {
 			offers = offersRepository.findAllExceptUser(pageable, user);
 		}
-		if (user.getRole().equals("ROLE_ADMIN")) {
-			offers = offersRepository.findAll(pageable);
-		}
 		return offers;
 	}
 
-	public void setOfferBuyed(boolean buyed, Long id) {
+	private void setOfferBuyed(boolean buyed, Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		offersRepository.updateBuyed(buyed, id, email);
 	}
 
-	public boolean buyOffer(User user, Long id) {
+	public void buyOffer(User user, Long id) {
 		Offer offer = offersRepository.findById(id).get();
-		if (user.getMoney() >= offer.getPrice()) {
+		if (user.getMoney() >= offer.getPrice() && !isOfferFromUser(id, user)) {
 			user.setMoney(user.getMoney() - offer.getPrice());
 			setOfferBuyed(true, id);
 			User seller = offer.getUser();
@@ -98,21 +92,8 @@ public class OffersService {
 			user.getOffers().add(offer);
 			usersRepository.save(user);
 			usersRepository.save(seller);
-			return true;
 		}
-		return false;
 	}
-
-	/*
-	 * public Page<Offer> searchOffersByDescriptionAndNameForUser(Pageable pageable,
-	 * String searchText, User user) { Page<Offer> offers = new PageImpl<Offer>(new
-	 * LinkedList<Offer>()); searchText = "%" + searchText + "%"; if
-	 * (user.getRole().equals("ROLE_STUDENT")) { offers =
-	 * offersRepository.searchByDescriptionNameAndUser(pageable, searchText, user);
-	 * } if (user.getRole().equals("ROLE_PROFESSOR")) { offers =
-	 * offersRepository.searchByDescriptionAndName(pageable, searchText); } return
-	 * offers; }
-	 */
 
 	public Page<Offer> searchOffersByDescriptionAndNameExceptUser(Pageable pageable, String searchText, User user) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
@@ -146,10 +127,16 @@ public class OffersService {
 	}
 
 	public void deleteOffer(Long id, User user) {
+		if (isOfferFromUser(id, user))
+			offersRepository.deleteById(id);
+	}
+
+	private boolean isOfferFromUser(Long id, User user) {
 		for (Offer o : user.getOffers()) {
 			if (o.getId() == id)
-				offersRepository.deleteById(id);
+				return true;
 		}
+		return false;
 	}
 
 }

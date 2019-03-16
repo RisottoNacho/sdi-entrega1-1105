@@ -40,8 +40,6 @@ public class OffersController {
 	@Autowired
 	private AddOfferValidator addOfferValidator;
 
-	@Autowired
-	private HttpSession httpSession;
 
 	@RequestMapping("/offer/list/update")
 	public String updateList(Model model, Pageable pageable, Principal principal) {
@@ -70,18 +68,12 @@ public class OffersController {
 	}
 
 	@RequestMapping(value = "/offer/buy/{id}-{page}", method = RequestMethod.GET)
-	public String setResendTrue(Model model, @PathVariable Long id, @PathVariable int page) {
+	public String buyOffer(Model model, @PathVariable Long id, @PathVariable int page) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		offersService.buyOffer(activeUser, id);
 		return "redirect:/offer/list" + "?page=" + page;
-	}
-
-	@RequestMapping(value = "/offer/{id}/nobuy", method = RequestMethod.GET)
-	public String setResendFalse(Model model, @PathVariable Long id) {
-		offersService.setOfferBuyed(false, id);
-		return "redirect:/offer/list";
 	}
 
 	@RequestMapping(value = "/offer/add", method = RequestMethod.GET)
@@ -93,12 +85,6 @@ public class OffersController {
 		model.addAttribute("money", activeUser.getMoney());
 		return "/offer/add";
 	}
-	/*
-	 * @RequestMapping(value = "/offer/add", method = RequestMethod.POST) public
-	 * String setOffer(@ModelAttribute Offer offer) { offer.setDate(new
-	 * Date(System.currentTimeMillis())); offersService.addOffer(offer); return
-	 * "redirect:/offer/list"; }
-	 */
 
 	@RequestMapping("/offer/delete/{id}")
 	public String deleteOffer(@PathVariable Long id) {
@@ -124,15 +110,5 @@ public class OffersController {
 		return "redirect:/home";
 	}
 
-	/*
-	 * // PENDIENTE DE IMPLEMENTACIÓN
-	 * 
-	 * @RequestMapping(value = "/offer/edit/{id}", method = RequestMethod.POST)
-	 * public String setEdit(Model model, @PathVariable Long id, @ModelAttribute
-	 * Offer offer) { Offer original = offersService.getOffer(id); // modificar solo
-	 * score y description original.setScore(offer.getScore());
-	 * original.setDescription(offer.getDescription());
-	 * //offersService.getOffer(original); return "redirect:/offer/details/" + id; }
-	 */
 
 }
