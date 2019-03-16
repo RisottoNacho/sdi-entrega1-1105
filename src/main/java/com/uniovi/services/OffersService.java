@@ -93,8 +93,11 @@ public class OffersService {
 		if (user.getMoney() >= offer.getPrice()) {
 			user.setMoney(user.getMoney() - offer.getPrice());
 			setOfferBuyed(true, id);
+			User seller = offer.getUser();
+			seller.setMoney(seller.getMoney()+offer.getPrice());
 			user.getOffers().add(offer);
 			usersRepository.save(user);
+			usersRepository.save(seller);
 			return true;
 		}
 		return false;
