@@ -2,6 +2,7 @@ package com.uniovi.services;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -45,11 +46,27 @@ public class OffersService {
 		}
 		return offers;
 	}
+	
+	public List<Offer> getOffersForUserNoPageable(User user) {
+		List<Offer> offers = new LinkedList<Offer>();
+		if (user.getRole().equals("ROLE_USER")) {
+			offers = offersRepository.findAllByUserNoPageable(user);
+		}
+		return offers;
+	}
 
 	public Page<Offer> getOffersBuyedByUser(Pageable pageable, User user) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (user.getRole().equals("ROLE_USER")) {
 			offers = offersRepository.findAllBuyedByUser(pageable, user.getEmail());
+		}
+		return offers;
+	}
+	
+	public List<Offer> getOffersBuyedByUserNoPageable(User user) {
+		List<Offer> offers = new LinkedList<Offer>();
+		if (user.getRole().equals("ROLE_USER")) {
+			offers = offersRepository.findAllBuyedByUserNoPageable(user.getEmail());
 		}
 		return offers;
 	}

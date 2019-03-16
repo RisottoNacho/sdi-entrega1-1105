@@ -55,9 +55,9 @@ public class UsersController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		model.addAttribute("offerList", offersService.getOffersForUser(pageable, activeUser));
+		model.addAttribute("offerList", offersService.getOffersForUserNoPageable(activeUser));
 		
-		model.addAttribute("buyedList", offersService.getOffersBuyedByUser(pageable, activeUser));
+		model.addAttribute("buyedList", offersService.getOffersBuyedByUserNoPageable(activeUser));
 		return "home";
 	}
 

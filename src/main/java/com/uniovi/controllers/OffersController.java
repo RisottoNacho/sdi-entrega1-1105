@@ -45,7 +45,7 @@ public class OffersController {
 
 	@RequestMapping("/offer/list/update")
 	public String updateList(Model model, Pageable pageable, Principal principal) {
-		String email = principal.getName(); // DNI es el name de la autenticación
+		String email = principal.getName(); // email es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
 		model.addAttribute("offerList", offers.getContent());
@@ -55,7 +55,7 @@ public class OffersController {
 	@RequestMapping("/offer/list")
 	public String getList(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value = "", required = false) String searchText) {
-		String email = principal.getName(); // DNI es el name de la autenticación
+		String email = principal.getName(); // email es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (searchText != null && !searchText.isEmpty()) {
