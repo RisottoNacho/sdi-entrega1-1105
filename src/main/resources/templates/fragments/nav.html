@@ -58,11 +58,11 @@
 
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
 					th:text="#{signup.message}"> <span
-						class="glyphicon glyphicon-user"></span> Registrate
+						class="glyphicon glyphicon-user"></span> 
 				</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login"
 					th:text="#{login.message}"> <span
-						class="glyphicon glyphicon-log-in"></span> Identifícate
+						class="glyphicon glyphicon-log-in"></span> 
 				</a></li>
 				<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
 						class="glyphicon glyphicon-log-out"></span> Desconectar
