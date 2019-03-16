@@ -40,7 +40,7 @@ public class OffersController {
 	@Autowired
 	private AddOfferValidator addOfferValidator;
 
-
+/*
 	@RequestMapping("/offer/list/update")
 	public String updateList(Model model, Pageable pageable, Principal principal) {
 		String email = principal.getName(); // email es el name de la autenticación
@@ -48,7 +48,7 @@ public class OffersController {
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
 		model.addAttribute("offerList", offers.getContent());
 		return "offer/list :: tableOffers";
-	}
+	}*/
 
 	@RequestMapping("/offer/list")
 	public String getList(Model model, Pageable pageable, Principal principal,
