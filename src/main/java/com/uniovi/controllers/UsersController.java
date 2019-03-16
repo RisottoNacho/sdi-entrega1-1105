@@ -1,24 +1,20 @@
 package com.uniovi.controllers;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.OffersService;
@@ -49,18 +45,39 @@ public class UsersController {
 		model.addAttribute("user", new User());
 		return "signup";
 	}
+/*
+	@RequestMapping(value = "/userMoney", method = RequestMethod.GET)
+	@ResponseBody
+	public String getMoney(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		model.addAttribute("userMoney", Double.toString(activeUser.getMoney()));
+		return Double.toString(activeUser.getMoney());
+	}*/
+
+
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(Model model, Pageable pageable) {
+	public String home(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
 		model.addAttribute("offerList", offersService.getOffersForUserNoPageable(activeUser));
-		
+		model.addAttribute("money", activeUser.getMoney());
 		model.addAttribute("buyedList", offersService.getOffersBuyedByUserNoPageable(activeUser));
 		return "home";
 	}
-
+/*
+	@GetMapping("/home")
+	public String getMoney(@RequestParam(name = "money", required = false) double money, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		model.addAttribute("money", activeUser.getMoney());
+		return "money";
+	}
+	*/
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Validated User user, BindingResult result, Model model) {
 		signUpFormValidator.validate(user, result);
@@ -82,21 +99,6 @@ public class UsersController {
 	public String getListado(Model model) {
 		model.addAttribute("usersList", usersService.getUsers());
 		return "user/list";
-	}
-	
-	@RequestMapping(value = "/user/money", method = RequestMethod.GET)
-	public void getMoney(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		String email = auth.getName();
-//		User activeUser = usersService.getUserByEmail(email);
-//		return Double.toString(activeUser.getMoney());
-		RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-		request.getSession().setAttribute("balance", activeUser.getMoney());
-		redirectStrategy.sendRedirect(request, response, "/home");
-		
 	}
 
 	@RequestMapping(value = "/user/add")

@@ -33,11 +33,11 @@ public class User {
 		this.email = email;
 		this.name = name;
 		this.lastName = lastName;
-		money = 100;
+		money = 100.0;
 	}
 
 	public User() {
-		money = 100;
+		money = 100.0;
 	}
 	
 
