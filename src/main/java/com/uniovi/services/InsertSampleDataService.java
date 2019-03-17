@@ -17,6 +17,7 @@ public class InsertSampleDataService {
 	@Autowired
 	private RolesService rolesService;
 
+	@SuppressWarnings("all")
 	@PostConstruct
 	public void init() {
 		User user1 = new User("1@a.com", "Barack", "Obama");
@@ -38,7 +39,6 @@ public class InsertSampleDataService {
 		user6.setPassword("admin");
 		user6.setRole(rolesService.getRoles()[1]);
 
-		@SuppressWarnings("rawtypes")
 		Set user1Offers = new HashSet<Offer>() {
 			private static final long serialVersionUID = 1L;
 
