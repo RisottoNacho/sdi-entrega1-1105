@@ -354,7 +354,6 @@ public class MyWallapopTests {
 //	Comprobar que la oferta sale en el listado de ofertas de dicho usuario.
 	@Test
 	public void PR16() {
-		initdb();
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "3@a.com", "123456");
 		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offerAdd");
