@@ -594,6 +594,38 @@ public class MyWallapopTests {
 		PO_NavView.changeIdiom(driver, "btnSpanish");
 		SeleniumUtils.textoPresentePagina(driver, "Ofertas");
 	}
+	
+//	Intentar acceder sin estar autenticado a la opción de listado de usuarios del administrador. Se
+//	deberá volver al formulario de login
+	@Test
+	public void PR28() {
+		initdb();
+		driver.get(URL + "/user/list");
+		PO_View.checkElement(driver, "text", "Iniciar sesión");
+	}
+	
+//	Intentar acceder sin estar autenticado a la opción de listado de ofertas propias de un usuario
+//	estándar. Se deberá volver al formulario de login.
+	@Test
+	public void PR29() {
+		initdb();
+		driver.get(URL + "/offer/list");
+		PO_View.checkElement(driver, "text", "Iniciar sesión");
+		driver.get(URL + "/home");
+		PO_View.checkElement(driver, "text", "Iniciar sesión");
+	}
+	
+//	Estando autenticado como usuario estándar intentar acceder a la opción de listado de
+//	usuarios del administrador. Se deberá indicar un mensaje de acción prohibida.
+	@Test
+	public void PR30() {
+		initdb();
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@a.com", "123456");
+		driver.get(URL + "/user/list");
+		SeleniumUtils.textoPresentePagina(driver, "HTTP Status 403 – Forbidden");
+	}
+
 
 	public void PR06d() {
 		// Vamos al formulario de registro
