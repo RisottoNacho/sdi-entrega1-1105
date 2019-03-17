@@ -40,7 +40,7 @@ import com.uniovi.tests.utils.SeleniumUtils;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class NotaneitorTests {
+public class MyWallapopTests {
 
 	@Autowired
 	private UsersService usersService;
