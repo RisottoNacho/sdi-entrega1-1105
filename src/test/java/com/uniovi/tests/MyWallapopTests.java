@@ -28,6 +28,7 @@ import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.UsersService;
+import com.uniovi.tests.pageobjects.PO_AddOfferView;
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_NavView;
@@ -353,19 +354,14 @@ public class MyWallapopTests {
 //	Comprobar que la oferta sale en el listado de ofertas de dicho usuario.
 	@Test
 	public void PR16() {
+		initdb();
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-		PO_NavView.clickDropdownMenuOption(driver, "users-dropdown", "users-menu", "viewUsers");
-		SeleniumUtils.textoPresentePagina(driver, "5@a.com");
-		SeleniumUtils.textoPresentePagina(driver, "4@a.com");
-		SeleniumUtils.textoPresentePagina(driver, "3@a.com");
-		driver.findElement(By.id("cb-5@a.com")).click();
-		driver.findElement(By.id("cb-4@a.com")).click();
-		driver.findElement(By.id("cb-3@a.com")).click();
-		driver.findElement(By.name("delete")).click();
-		SeleniumUtils.textoNoPresentePagina(driver, "5@a.com");
-		SeleniumUtils.textoNoPresentePagina(driver, "4@a.com");
-		SeleniumUtils.textoNoPresentePagina(driver, "3@a.com");
+		PO_LoginView.fillForm(driver, "3@a.com", "123456");
+		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offerAdd");
+		PO_AddOfferView.fillForm(driver, "Selenium test", "This is a test for the webPage", "6.0");
+		//PO_HomeView.checkElement(driver, "text", "Selenium test");
+		SeleniumUtils.esperarSegundos(driver, 4);
+		SeleniumUtils.textoPresentePagina(driver, "Selenium test");
 	}
 
 //	Visualizar al menos cuatro páginas en Español/Inglés/Español (comprobando que algunas
