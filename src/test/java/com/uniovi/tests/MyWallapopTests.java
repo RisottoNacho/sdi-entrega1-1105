@@ -189,7 +189,8 @@ public class MyWallapopTests {
 		PO_View.checkElement(driver, "text", "Estas son sus ofertas a la venta");
 	}
 
-	// Registro de Usuario con datos inválidos (email vacío, nombre vacío, apellidos vacíos).
+	// Registro de Usuario con datos inválidos (email vacío, nombre vacío, apellidos
+	// vacíos).
 	@Test
 	public void PR02() {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
@@ -217,19 +218,17 @@ public class MyWallapopTests {
 		PO_RegisterView.checkElement(driver, "text", "Este Email ya existe");
 	}
 
-	// PR05. Prueba del formulario de registro. registro con datos correctos
+	// Inicio de sesión con datos válidos (administrador).
 	@Test
 	public void PR05() {
-		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "77777778A", "Josefo", "Perez", "77777", "77777");
-		// Comprobamos que entramos en la sección privada
-		PO_View.checkElement(driver, "text", "Notas del usuario");
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_HomeView.checkElement(driver, "text", "admin@email.com");
 	}
 
 	// PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto,
 	// .... pagination pagination-centered, Error.signup.dni.length
+	@Test
 	public void PR06() {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
