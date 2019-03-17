@@ -51,8 +51,8 @@ public class MyWallapopTests {
 	
 	// En Windows (Debe ser la versión 65.0.1 y desactivar las actualizacioens
 	// automáticas)):
-	static String PathFirefox64 = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
-	static String Geckdriver022 = "C:\\Users\\uo258014\\Desktop\\geckodriver024win64.exe";
+	static String PathFirefox64 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+	static String Geckdriver022 = "C:\\Users\\Dio Brando\\Desktop\\gecko\\geckodriver024win64.exe";
 	// En MACOSX (Debe ser la versión 65.0.1 y desactivar las actualizacioens
 	// automáticas):
 	// static String PathFirefox65 =
@@ -130,9 +130,10 @@ public class MyWallapopTests {
 		driver.manage().deleteAllCookies();
 	}
 
+	// Registro de Usuario con datos válidos.
 	@Test
 	public void PR01() {
-		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 	}
 
 	// PR02. OPción de navegación. Pinchar en el enlace Registro en la página home
