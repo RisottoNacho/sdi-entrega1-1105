@@ -14,20 +14,20 @@
 				<li><a href="/home">Home</a></li>
 				<li sec:authorize="hasRole('ROLE_USER')" id="offers-menu"
 					class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> Gestión de ofertas <span
+					data-toggle="dropdown" href="#" th:text="#{Nav.offers}"> Gestión de ofertas <span
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/offer/add">Agregar Oferta</a></li>
-						<li><a href="/offer/list">Ver Ofertas</a></li>
+						<li><a href="/offer/add" th:text="#{Nav.offers.add}">Agregar Oferta</a></li>
+						<li><a href="/offer/list" th:text="#{Nav.offers.view}">Ver Ofertas</a></li>
 					</ul></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="hasRole('ROLE_ADMIN')"><a
-					class="dropdown-toggle" data-toggle="dropdown" href="#">
+					class="dropdown-toggle" data-toggle="dropdown" href="#" th:text="#{Nav.users}">
 						Gestión de Usuarios <span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/user/list">Ver Usuarios</a></li>
+						<li><a href="/user/list" th:text="#{Nav.users.view}">Ver Usuarios</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right" href="foo">
@@ -65,7 +65,7 @@
 						class="glyphicon glyphicon-log-in"></span> 
 				</a></li>
 				<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
-						class="glyphicon glyphicon-log-out"></span> Desconectar
+						class="glyphicon glyphicon-log-out" th:text="#{Nav.logout}"></span> Desconectar
 				</a></li>
 
 			</ul>
