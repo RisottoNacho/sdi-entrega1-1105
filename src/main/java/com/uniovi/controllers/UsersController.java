@@ -95,13 +95,4 @@ public class UsersController {
 		}
 		return "redirect:/user/list";
 	}
-
-	@RequestMapping("/user/delete/{id}")
-	public String delete(@PathVariable Long id) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
-		usersService.deleteUser(id, activeUser);
-		return "redirect:/user/list";
-	}
 }
