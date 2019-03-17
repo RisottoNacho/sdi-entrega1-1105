@@ -557,6 +557,7 @@ public class MyWallapopTests {
 //			Usuario/Listado de Usuarios de Admin/Vista de alta de Oferta
 	@Test
 	public void PR27() {
+		PO_NavView.changeIdiom(driver, "btnSpanish");
 		SeleniumUtils.textoPresentePagina(driver, "Regístrese ahora para empezar a comprar");
 		PO_NavView.changeIdiom(driver, "btnEnglish");
 		SeleniumUtils.textoPresentePagina(driver, "Sing in now and start buying");
