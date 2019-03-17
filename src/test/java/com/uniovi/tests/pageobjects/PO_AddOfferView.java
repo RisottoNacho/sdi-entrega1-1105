@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.uniovi.tests.utils.SeleniumUtils;
+
 public class PO_AddOfferView extends PO_View {
 
 	static public void fillForm(WebDriver driver, String titlep, String descriptionp, String pricep) {
@@ -15,7 +17,6 @@ public class PO_AddOfferView extends PO_View {
 		description.click();
 		description.clear();
 		description.sendKeys(descriptionp);
-		title.sendKeys(titlep);
 		WebElement price = driver.findElement(By.name("price"));
 		price.click();
 		price.clear();

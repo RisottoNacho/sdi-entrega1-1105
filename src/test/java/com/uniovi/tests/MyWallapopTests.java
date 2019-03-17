@@ -358,9 +358,7 @@ public class MyWallapopTests {
 		PO_LoginView.fillForm(driver, "3@a.com", "123456");
 		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offerAdd");
 		PO_AddOfferView.fillForm(driver, "Selenium test", "This is a test for the webPage", "6.0");
-		//PO_HomeView.checkElement(driver, "text", "Selenium test");
-		SeleniumUtils.esperarSegundos(driver, 4);
-		//SeleniumUtils.textoPresentePagina(driver, "Selenium test");
+		PO_HomeView.checkElement(driver, "text", "Selenium test");
 	}
 
 //	Visualizar al menos cuatro páginas en Español/Inglés/Español (comprobando que algunas
