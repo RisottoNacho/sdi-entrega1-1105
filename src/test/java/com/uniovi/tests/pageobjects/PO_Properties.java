@@ -21,12 +21,18 @@ public class PO_Properties {
 	static int SPANISH = 0;
 	static int ENGLISH = 1;	
 	static Locale[] idioms = new Locale[] {new Locale("ES"), new Locale("EN")};
-	//static Properties p = new Properties();
-	public PO_Properties(String Path) //throws FileNotFoundException, IOException 
+	static Properties p = new Properties();
+	public PO_Properties(String Path)
 	{
 		this.Path = Path;
-		//p.load(new FileReader(Path));
-		//p.getProperty()
+		try {
+			p.load(new FileReader(Path));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//p.getProperty();
 	}
 	//
 	// locale is de index in idioms array.
