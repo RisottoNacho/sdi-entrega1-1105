@@ -32,7 +32,7 @@
 						<td th:text="${offer.title}"></td>
 						<td th:text="${offer.description}"></td>
 						<td th:text="${offer.score}"></td>
-						<td><a th:id="${'del'+offer.id}" th:href="${'/offer/delete/' + offer.id}" th:text="#{home.OwnOffers.delete}">Eliminar</a></td>
+						<td><a th:id="${'del-'+offer.title}" th:href="${'/offer/delete/' + offer.id}" th:text="#{home.OwnOffers.delete}">Eliminar</a></td>
 						<th><a th:if="${offer.buyed}" th:text="#{home.OwnOffers.sold}">Vendido</a></th>
 					</tr>
 				</tbody>

@@ -127,12 +127,12 @@ public class OffersService {
 	}
 
 	public void deleteOffer(Long id, User user) {
-		if (isOfferFromUser(id, user))
+		if (offersRepository.findById(id).get().getUser().getEmail().contentEquals(user.getEmail()))
 			offersRepository.deleteById(id);
 	}
 
 	private boolean isOfferFromUser(Long id, User user) {
-		for (Offer o : user.getOffers()) {
+		for (Offer o : offersRepository.findAllBuyedByUserNoPageable(user.getEmail())) {
 			if (o.getId() == id)
 				return true;
 		}

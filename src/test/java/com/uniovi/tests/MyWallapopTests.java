@@ -395,11 +395,7 @@ public class MyWallapopTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "3@a.com", "123456");
 		SeleniumUtils.textoPresentePagina(driver, "Cocacola");
-		driver.findElement(By.id(id));
-		SeleniumUtils.esperarSegundos(driver, 2);
-		offers.get(0).click();
-		// driver.findElement(By.id("Eliminar")).click();
-		SeleniumUtils.esperarSegundos(driver, 2);
+		driver.findElement(By.id("del-Cocacola")).click();
 		SeleniumUtils.textoNoPresentePagina(driver, "Cocacola");
 	}
 
