@@ -195,10 +195,15 @@ public class MyWallapopTests {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		PO_RegisterView.fillForm(driver, " ", "Josefo", "Perez", "77777", "77777");
 		PO_View.checkKey(driver, "Error.signup.email.style", PO_Properties.getSPANISH());
+		PO_RegisterView.fillForm(driver, "pe@gmail.com", " ", "Perez", "77777", "77777");
+		PO_View.checkKey(driver, "Error.signup.name.length", PO_Properties.getSPANISH());
+		PO_RegisterView.fillForm(driver, "pe@gmail.com", "Josefo", " ", "77777", "77777");
+		PO_View.checkKey(driver, "Error.signup.surName.length", PO_Properties.getSPANISH());
 	}
 
 	// PR03. OPción de navegación. Pinchar en el enlace Identificate en la página
 	// home
+	@Test
 	public void PR03() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 	}
