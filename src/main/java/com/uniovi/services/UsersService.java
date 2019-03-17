@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.Sdi1105MyWallapopApplication;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 
@@ -19,6 +22,8 @@ public class UsersService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	public static final Logger logger = LoggerFactory.getLogger(UsersService.class);
 
 	@PostConstruct
 	public void init() {
@@ -28,6 +33,7 @@ public class UsersService {
 		List<User> users = new ArrayList<User>();
 		usersRepository.findAll().forEach(users::add);
 		users.remove(users.indexOf(user));
+		logger.info("this is a info message");
 		return users;
 	}
 
