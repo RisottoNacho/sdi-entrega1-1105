@@ -5,25 +5,27 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2>Ofertas</h2>
+		<h2 th:text="#{Offers.list.header}">Ofertas</h2>
 		<form class="navbar-form" action="/offer/list">
 			<div class="form-group">
 				<input name="searchText" type="text" class="form-control" size="50"
-					placeholder="Buscar por título o descripción">
+					th:placeholder="#{Offers.list.searchSuggest}">
 			</div>
-			<button type="submit" class="btn btn-default">Buscar</button>
+			<button type="submit" class="btn btn-default">
+				<span th:text="#{Offers.list.searchButton}"></span>
+			</button>
 		</form>
-		<p>Las ofertas que actualmente figuran en el sistema son las
-			siguientes:</p>
+		</strong><strong><p th:text="#{Offers.list.subtitle}">Las ofertas
+				que actualmente figuran en el sistema son las siguientes:</p></strong>
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tableOffers"
 				id="tableOffers">
 				<thead>
 					<tr>
-						<th class="col-md-2">Título</th>
-						<th>Descripción</th>
-						<th>Precio</th>
-						<th>Vendedor</th>
+						<th class="col-md-2" th:text="#{Offers.list.title}"></th>
+						<th th:text="#{Offers.list.description}"></th>
+						<th th:text="#{Offers.list.price}"></th>
+						<th th:text="#{Offers.list.seller}"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,10 +36,13 @@
 						<td th:text="${offer.user.name +' '+offer.user.lastName}"></td>
 						<td th:if="${money >= offer.price}"><a
 							th:if="!${offer.buyed}"
-							th:href="${'/offer/buy/' + offer.id+'-'+page.getNumber()}">Comprar</a></td>
+							th:href="${'/offer/buy/' + offer.id+'-'+page.getNumber()}"><span
+								th:text="#{Offers.list.buy}"></span></a></td>
 						<th th:unless="${money >= offer.price}"><a
-							th:if="!${offer.buyed}">No tienes suficiente dinero</a></th>
-						<th><a th:if="${offer.buyed}">Vendido</a></th>
+							th:if="!${offer.buyed}"><span
+								th:text="#{Offers.list.noMoney}"></span></a></th>
+						<th><a th:if="${offer.buyed}"><span
+								th:text="#{Offers.list.selled}"></span></a></th>
 						</div>
 						</td>
 					</tr>
