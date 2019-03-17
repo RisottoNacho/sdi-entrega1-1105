@@ -226,10 +226,54 @@ public class MyWallapopTests {
 		PO_HomeView.checkElement(driver, "text", "admin@email.com");
 	}
 
-	// PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto,
-	// .... pagination pagination-centered, Error.signup.dni.length
+	// Inicio de sesión con datos válidos (usuario estándar).
 	@Test
 	public void PR06() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@a.com", "123456");
+		PO_HomeView.checkElement(driver, "text", "1@a.com");
+	}
+
+	// Inicio de sesión con datos inválidos (usuario estándar, campo email y
+	// contraseña vacíos)
+	@Test
+	public void PR07() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, " ", "123456");
+		PO_HomeView.checkElement(driver, "text", "Email o contraseña incorrectos.");
+		PO_LoginView.fillForm(driver, "1@a.com", " ");
+		PO_HomeView.checkElement(driver, "text", "Email o contraseña incorrectos.");
+		PO_LoginView.fillForm(driver, " ", " ");
+		PO_HomeView.checkElement(driver, "text", "Email o contraseña incorrectos.");
+	}
+
+	// Inicio de sesión con datos válidos (usuario estándar, email existente, pero
+	// contraseña
+	// incorrecta).
+	@Test
+	public void PR08() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@a.com", "12356");
+		PO_HomeView.checkElement(driver, "text", "Email o contraseña incorrectos.");
+	}
+
+	// Inicio de sesión con datos inválidos (usuario estándar, email no existente en la aplicación).
+	@Test
+	public void PR09() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "145@a.com", "123456");
+		PO_HomeView.checkElement(driver, "text", "Email o contraseña incorrectos.");
+	}
+	
+	// Inicio de sesión con datos inválidos (usuario estándar, email no existente en la aplicación).
+	@Test
+	public void PR10() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "145@a.com", "123456");
+		PO_HomeView.checkElement(driver, "text", "Email o contraseña incorrectos.");
+	}
+
+	public void PR06d() {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		// Rellenamos el formulario.
@@ -246,7 +290,7 @@ public class MyWallapopTests {
 	}
 
 	// PRN. Loguearse con exito desde el ROl de Usuario, 99999990D, 123456
-	public void PR07() {
+	public void PR07d() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
@@ -255,7 +299,7 @@ public class MyWallapopTests {
 		PO_View.checkElement(driver, "text", "Notas del usuario");
 	}
 
-	public void PR08() {
+	public void PR08d() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
@@ -264,7 +308,7 @@ public class MyWallapopTests {
 		PO_View.checkElement(driver, "text", "Notas del usuario");
 	}
 
-	public void PR09() {
+	public void PR09d() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
@@ -273,7 +317,7 @@ public class MyWallapopTests {
 		PO_View.checkElement(driver, "text", "Notas del usuario");
 	}
 
-	public void PR10() {
+	public void PR10d() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
@@ -282,7 +326,7 @@ public class MyWallapopTests {
 		PO_View.checkElement(driver, "text", "Notas del usuario");
 	}
 
-	public void PR11() {
+	public void PR11d() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
@@ -295,7 +339,7 @@ public class MyWallapopTests {
 
 	// PR12. Loguearse, comprobar que se visualizan 4 filas de notas y desconectarse
 	// usando el rol de estudiante.
-	public void PR12() {
+	public void PR12d() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
@@ -313,7 +357,7 @@ public class MyWallapopTests {
 	// PR13. Loguearse como estudiante y ver los detalles de la nota con Descripcion
 	// = Nota A2.
 	// P13. Ver la lista de Notas.
-	public void PR13() {
+	public void PR13d() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
@@ -334,7 +378,7 @@ public class MyWallapopTests {
 
 	// P14. Loguearse como profesor y Agregar Nota A2.
 	// P14. Esta prueba podría encapsularse mejor ...
-	public void PR14() {
+	public void PR14d() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
@@ -364,7 +408,7 @@ public class MyWallapopTests {
 	// PRN. Loguearse como profesor, vamos a la ultima página y Eliminamos la Nota
 	// Nueva 1.
 	// PRN. Ver la lista de Notas.
-	public void PR15() {
+	public void PR15d() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
