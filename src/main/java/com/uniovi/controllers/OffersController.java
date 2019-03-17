@@ -4,7 +4,8 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.LinkedList;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,6 +36,7 @@ public class OffersController {
 	@Autowired
 	private UsersService usersService;
 
+	//private static final Logger logger = LoggerFactory.getLogger(OffersController.class);
 	@Autowired
 	private AddOfferValidator addOfferValidator;
 
@@ -53,6 +55,7 @@ public class OffersController {
 			@RequestParam(value = "", required = false) String searchText) {
 		String email = principal.getName(); // email es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
+		//logger.warn("");
 		if(user.getRole() == "ROLE_ADMIN")
 			return "/home";
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());

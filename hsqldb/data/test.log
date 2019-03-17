@@ -1,0 +1,334 @@
+/*C503*/SET SCHEMA PUBLIC
+alter table offer drop constraint FKo0rdvexlxmyakcvw8b5aqidlk
+drop table offer if exists
+drop table user if exists
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table offer (id bigint not null, buyed boolean, buyed_by varchar(255), date timestamp, description varchar(255), price double, title varchar(255), user_id bigint, primary key (id))
+create table user (id bigint not null, email varchar(255), last_name varchar(255), money double not null, name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table offer add constraint FKo0rdvexlxmyakcvw8b5aqidlk foreign key (user_id) references user
+INSERT INTO USER VALUES(1,'1@a.com','Obama',100.0E0,'Barack','$2a$10$BTd4ZNZxeU167QToHFSbDeFVfjuYFt646B5ACikLcdlTDODEnfFoK','ROLE_USER')
+INSERT INTO OFFER VALUES(2,FALSE,NULL,'2019-03-17 20:54:54.341000','Hechas con animal muerto',20.0E0,'Pelucas',1)
+INSERT INTO OFFER VALUES(3,FALSE,NULL,'2019-03-17 20:54:54.341000','LED significa que es poderosa',50.0E0,'Acciones de Bankia',1)
+INSERT INTO OFFER VALUES(4,FALSE,NULL,'2019-03-17 20:54:54.341000','LED significa que es poderosa',50.0E0,'Bombilla LED',1)
+INSERT INTO OFFER VALUES(5,FALSE,NULL,'2019-03-17 20:54:54.341000','S\u00f3lo 432543 yardas, opel corsa rojo en perfecto estado',50.0E0,'Vendo Opel Corsa',1)
+INSERT INTO OFFER VALUES(6,FALSE,NULL,'2019-03-17 20:54:54.341000','Bendo play 2 totalmente jakiada con chip y todos los juegos',20.0E0,'Vendo Play 2 chipeada',1)
+INSERT INTO OFFER VALUES(7,FALSE,NULL,'2019-03-17 20:54:54.341000','Caseros, los hizo la mama',50.0E0,'Mazapanes',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'2@a.com','Sanz',100.0E0,'Paco','$2a$10$o2UPbjQhPtm2Gd52KpVGRu3V41CpEGdcl7DyR6rSyG5/Q7njRZEOG','ROLE_USER')
+INSERT INTO OFFER VALUES(9,FALSE,NULL,'2019-03-17 20:54:54.341000','Un term\u00f3metro que vino del planeta Mercurio, no confundir, el term\u00f3metro es digital.',5.0E0,'Term\u00f3metro de Mercurio',8)
+INSERT INTO OFFER VALUES(10,FALSE,NULL,'2019-03-17 20:54:54.341000','Vendo Plut\u00f3n para quien lo quiera, se lo cambi\u00e9 a un ni\u00f1o por chicles',60.0E0,'Plut\u00f3n',8)
+INSERT INTO OFFER VALUES(11,FALSE,NULL,'2019-03-17 20:54:54.341000','El elemento qu\u00edmico, no el planeta, no se vayan a confundir',30.0E0,'Mercurio',8)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'3@a.com','Joestar',100.0E0,'Joseph','$2a$10$j0z4Tw3C86rx2HOYRTCcmel93lpEbIVWcVIjgfi/L1ePw1vqh5L3m','ROLE_USER')
+INSERT INTO OFFER VALUES(13,FALSE,NULL,'2019-03-17 20:54:54.342000','Vendo una cocacolita',100.0E0,'Cocacola',12)
+INSERT INTO OFFER VALUES(14,FALSE,NULL,'2019-03-17 20:54:54.342000','Vendo una chancla porque perd\u00ed la otra para alguien que haya perdido un pierna o algo',9.0E0,'Chancla',12)
+INSERT INTO OFFER VALUES(15,FALSE,NULL,'2019-03-17 20:54:54.342000','No me vienen haciendo falta en casa as\u00ed que pa quien las quiera',5.0E0,'Cenizas de mi abuelo',12)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 16
+COMMIT
+INSERT INTO USER VALUES(16,'4@a.com','Buccarati',100.0E0,'Bruno','$2a$10$.bE6RWX2WoA3NnqNekeTBe9XPqWLlRMAZcFLUxlTPa09DO2Cp0Tsa','ROLE_USER')
+INSERT INTO OFFER VALUES(17,FALSE,NULL,'2019-03-17 20:54:54.342000','Ya no acelera como cuando era nuevo as\u00ed que lo vendo',21.0E0,'Acelerador de part\u00edculas',16)
+INSERT INTO OFFER VALUES(18,FALSE,NULL,'2019-03-17 20:54:54.342000','Para tener un aliento frequ\u00edsimo',1.0E0,'Chcicles de menta',16)
+INSERT INTO OFFER VALUES(19,FALSE,NULL,'2019-03-17 20:54:54.342000','Un teclado capaz de arreglar cualquier aver\u00eda en tu coche',6.0E0,'Teclado mec\u00e1nico',16)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 20
+COMMIT
+INSERT INTO USER VALUES(20,'5@a.com','Brando',100.0E0,'Dio','$2a$10$GOPJtd6d9eYsW6chxbGO6OjZOneAdgiRykUlAYAkkYdSp72.Siztm','ROLE_USER')
+INSERT INTO OFFER VALUES(21,FALSE,NULL,'2019-03-17 20:54:54.342000','Key para Mi Primera Encarta 2005, totalmente original, sin activar',5.0E0,'Mi encarta 2005',20)
+INSERT INTO OFFER VALUES(22,FALSE,NULL,'2019-03-17 20:54:54.342000','Cuidado, no se debe mezclar nunca con poliuretano',2.0E0,'Polietileno',20)
+INSERT INTO OFFER VALUES(23,FALSE,NULL,'2019-03-17 20:54:54.342000','Ara\u00f1a mucho as\u00ed que he decidido vender al gato, se llama Stroheim',11.0E0,'Gato',20)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 24
+COMMIT
+INSERT INTO USER VALUES(24,'admin@email.com','Mermela',100.0E0,'Paco','$2a$10$nhcWaXLAMjvUDpQDBSzmxu3hV.IVvf1w3LhvPACpF35dNwkfrLzY.','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 25
+COMMIT
+/*C505*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C506*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C508*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C511*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C507*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C510*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C512*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C509*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C504*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C503*/DISCONNECT
+/*C513*/SET SCHEMA PUBLIC
+alter table offer drop constraint FKo0rdvexlxmyakcvw8b5aqidlk
+drop table offer if exists
+drop table user if exists
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table offer (id bigint not null, buyed boolean, buyed_by varchar(255), date timestamp, description varchar(255), price double, title varchar(255), user_id bigint, primary key (id))
+create table user (id bigint not null, email varchar(255), last_name varchar(255), money double not null, name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table offer add constraint FKo0rdvexlxmyakcvw8b5aqidlk foreign key (user_id) references user
+INSERT INTO USER VALUES(1,'1@a.com','Obama',100.0E0,'Barack','$2a$10$VTMzsTnop3WoYPVdru.DbOPz7qK.JOTeI5y50PAsRhomQObrnprnW','ROLE_USER')
+INSERT INTO OFFER VALUES(2,FALSE,NULL,'2019-03-17 21:02:55.070000','LED significa que es poderosa',50.0E0,'Acciones de Bankia',1)
+INSERT INTO OFFER VALUES(3,FALSE,NULL,'2019-03-17 21:02:55.070000','Bendo play 2 totalmente jakiada con chip y todos los juegos',20.0E0,'Vendo Play 2 chipeada',1)
+INSERT INTO OFFER VALUES(4,FALSE,NULL,'2019-03-17 21:02:55.070000','Hechas con animal muerto',20.0E0,'Pelucas',1)
+INSERT INTO OFFER VALUES(5,FALSE,NULL,'2019-03-17 21:02:55.070000','S\u00f3lo 432543 yardas, opel corsa rojo en perfecto estado',50.0E0,'Vendo Opel Corsa',1)
+INSERT INTO OFFER VALUES(6,FALSE,NULL,'2019-03-17 21:02:55.070000','Caseros, los hizo la mama',50.0E0,'Mazapanes',1)
+INSERT INTO OFFER VALUES(7,FALSE,NULL,'2019-03-17 21:02:55.070000','LED significa que es poderosa',50.0E0,'Bombilla LED',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'2@a.com','Sanz',100.0E0,'Paco','$2a$10$VEmYzp8s.231zKA4AE3UDuD0GvISdkPq40j9qz5pgjt2b2BFSyehO','ROLE_USER')
+INSERT INTO OFFER VALUES(9,FALSE,NULL,'2019-03-17 21:02:55.071000','Un term\u00f3metro que vino del planeta Mercurio, no confundir, el term\u00f3metro es digital.',5.0E0,'Term\u00f3metro de Mercurio',8)
+INSERT INTO OFFER VALUES(10,FALSE,NULL,'2019-03-17 21:02:55.071000','El elemento qu\u00edmico, no el planeta, no se vayan a confundir',30.0E0,'Mercurio',8)
+INSERT INTO OFFER VALUES(11,FALSE,NULL,'2019-03-17 21:02:55.071000','Vendo Plut\u00f3n para quien lo quiera, se lo cambi\u00e9 a un ni\u00f1o por chicles',60.0E0,'Plut\u00f3n',8)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'3@a.com','Joestar',100.0E0,'Joseph','$2a$10$jLXB8DRy3LP.2BtusJLYp.7j647VmnDiB2EYUL8oh8RerlAMT3ePS','ROLE_USER')
+INSERT INTO OFFER VALUES(13,FALSE,NULL,'2019-03-17 21:02:55.071000','Vendo una chancla porque perd\u00ed la otra para alguien que haya perdido un pierna o algo',9.0E0,'Chancla',12)
+INSERT INTO OFFER VALUES(14,FALSE,NULL,'2019-03-17 21:02:55.071000','Vendo una cocacolita',100.0E0,'Cocacola',12)
+INSERT INTO OFFER VALUES(15,FALSE,NULL,'2019-03-17 21:02:55.071000','No me vienen haciendo falta en casa as\u00ed que pa quien las quiera',5.0E0,'Cenizas de mi abuelo',12)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 16
+COMMIT
+INSERT INTO USER VALUES(16,'4@a.com','Buccarati',100.0E0,'Bruno','$2a$10$LFCnc.K9sDVAy/WBl.GkGOqVwOVnbFUU35maczjQv8Cwi1yCtqG2W','ROLE_USER')
+INSERT INTO OFFER VALUES(17,FALSE,NULL,'2019-03-17 21:02:55.071000','Para tener un aliento frequ\u00edsimo',1.0E0,'Chcicles de menta',16)
+INSERT INTO OFFER VALUES(18,FALSE,NULL,'2019-03-17 21:02:55.071000','Un teclado capaz de arreglar cualquier aver\u00eda en tu coche',6.0E0,'Teclado mec\u00e1nico',16)
+INSERT INTO OFFER VALUES(19,FALSE,NULL,'2019-03-17 21:02:55.071000','Ya no acelera como cuando era nuevo as\u00ed que lo vendo',21.0E0,'Acelerador de part\u00edculas',16)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 20
+COMMIT
+INSERT INTO USER VALUES(20,'5@a.com','Brando',100.0E0,'Dio','$2a$10$UjN6u92tP128tUslWQOwQuZfuAVtobVzsmgC/BWAy.Ffzf2JZZuaC','ROLE_USER')
+INSERT INTO OFFER VALUES(21,FALSE,NULL,'2019-03-17 21:02:55.072000','Ara\u00f1a mucho as\u00ed que he decidido vender al gato, se llama Stroheim',11.0E0,'Gato',20)
+INSERT INTO OFFER VALUES(22,FALSE,NULL,'2019-03-17 21:02:55.072000','Key para Mi Primera Encarta 2005, totalmente original, sin activar',5.0E0,'Mi encarta 2005',20)
+INSERT INTO OFFER VALUES(23,FALSE,NULL,'2019-03-17 21:02:55.072000','Cuidado, no se debe mezclar nunca con poliuretano',2.0E0,'Polietileno',20)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 24
+COMMIT
+INSERT INTO USER VALUES(24,'admin@email.com','Mermela',100.0E0,'Paco','$2a$10$o1iiJwsWNI9EaqjYghSMBeAIWZUzjY36YqRs8VWK3SB5TlgV9YP/6','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 25
+COMMIT
+DELETE FROM OFFER WHERE ID=2
+COMMIT
+/*C514*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C520*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C515*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C518*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C519*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C522*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C513*/DISCONNECT
+/*C516*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C517*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C521*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C523*/SET SCHEMA PUBLIC
+alter table offer drop constraint FKo0rdvexlxmyakcvw8b5aqidlk
+drop table offer if exists
+drop table user if exists
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table offer (id bigint not null, buyed boolean, buyed_by varchar(255), date timestamp, description varchar(255), price double, title varchar(255), user_id bigint, primary key (id))
+create table user (id bigint not null, email varchar(255), last_name varchar(255), money double not null, name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table offer add constraint FKo0rdvexlxmyakcvw8b5aqidlk foreign key (user_id) references user
+INSERT INTO USER VALUES(1,'1@a.com','Obama',100.0E0,'Barack','$2a$10$gqEMzfuMSvP1ilmOSYvPCuGn3NFU2.mFbGUkuowTroK69PrmBgngy','ROLE_USER')
+INSERT INTO OFFER VALUES(2,FALSE,NULL,'2019-03-17 21:08:53.607000','LED significa que es poderosa',50.0E0,'Bombilla LED',1)
+INSERT INTO OFFER VALUES(3,FALSE,NULL,'2019-03-17 21:08:53.607000','LED significa que es poderosa',50.0E0,'Acciones de Bankia',1)
+INSERT INTO OFFER VALUES(4,FALSE,NULL,'2019-03-17 21:08:53.607000','S\u00f3lo 432543 yardas, opel corsa rojo en perfecto estado',50.0E0,'Vendo Opel Corsa',1)
+INSERT INTO OFFER VALUES(5,FALSE,NULL,'2019-03-17 21:08:53.607000','Hechas con animal muerto',20.0E0,'Pelucas',1)
+INSERT INTO OFFER VALUES(6,FALSE,NULL,'2019-03-17 21:08:53.607000','Bendo play 2 totalmente jakiada con chip y todos los juegos',20.0E0,'Vendo Play 2 chipeada',1)
+INSERT INTO OFFER VALUES(7,FALSE,NULL,'2019-03-17 21:08:53.607000','Caseros, los hizo la mama',50.0E0,'Mazapanes',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'2@a.com','Sanz',100.0E0,'Paco','$2a$10$XgH4veFmEuQOw5QaR5zkoOmSrUQBzhZQ/ebiR7skNDvJQcNE00uXS','ROLE_USER')
+INSERT INTO OFFER VALUES(9,FALSE,NULL,'2019-03-17 21:08:53.608000','Vendo Plut\u00f3n para quien lo quiera, se lo cambi\u00e9 a un ni\u00f1o por chicles',60.0E0,'Plut\u00f3n',8)
+INSERT INTO OFFER VALUES(10,FALSE,NULL,'2019-03-17 21:08:53.608000','El elemento qu\u00edmico, no el planeta, no se vayan a confundir',30.0E0,'Mercurio',8)
+INSERT INTO OFFER VALUES(11,FALSE,NULL,'2019-03-17 21:08:53.608000','Un term\u00f3metro que vino del planeta Mercurio, no confundir, el term\u00f3metro es digital.',5.0E0,'Term\u00f3metro de Mercurio',8)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'3@a.com','Joestar',100.0E0,'Joseph','$2a$10$OAx37CIVJ8.CD36JbYLpluSPA6uUHJcnVpHda/QXcb3d4s6Z0WYEe','ROLE_USER')
+INSERT INTO OFFER VALUES(13,FALSE,NULL,'2019-03-17 21:08:53.609000','Vendo una chancla porque perd\u00ed la otra para alguien que haya perdido un pierna o algo',9.0E0,'Chancla',12)
+INSERT INTO OFFER VALUES(14,FALSE,NULL,'2019-03-17 21:08:53.609000','No me vienen haciendo falta en casa as\u00ed que pa quien las quiera',5.0E0,'Cenizas de mi abuelo',12)
+INSERT INTO OFFER VALUES(15,FALSE,NULL,'2019-03-17 21:08:53.609000','Vendo una cocacolita',100.0E0,'Cocacola',12)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 16
+COMMIT
+INSERT INTO USER VALUES(16,'4@a.com','Buccarati',100.0E0,'Bruno','$2a$10$HHrbAhDR3PAPh0XqJoOzbeNnrC2qczMF7OhsRPzotyooXYC53GRuu','ROLE_USER')
+INSERT INTO OFFER VALUES(17,FALSE,NULL,'2019-03-17 21:08:53.609000','Un teclado capaz de arreglar cualquier aver\u00eda en tu coche',6.0E0,'Teclado mec\u00e1nico',16)
+INSERT INTO OFFER VALUES(18,FALSE,NULL,'2019-03-17 21:08:53.609000','Ya no acelera como cuando era nuevo as\u00ed que lo vendo',21.0E0,'Acelerador de part\u00edculas',16)
+INSERT INTO OFFER VALUES(19,FALSE,NULL,'2019-03-17 21:08:53.609000','Para tener un aliento frequ\u00edsimo',1.0E0,'Chcicles de menta',16)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 20
+COMMIT
+INSERT INTO USER VALUES(20,'5@a.com','Brando',100.0E0,'Dio','$2a$10$XQJbDXOpV/uJtbK8dYvOTefePK79Pc/NG2V.TA4iWJfsPnHNHBX52','ROLE_USER')
+INSERT INTO OFFER VALUES(21,FALSE,NULL,'2019-03-17 21:08:53.610000','Ara\u00f1a mucho as\u00ed que he decidido vender al gato, se llama Stroheim',11.0E0,'Gato',20)
+INSERT INTO OFFER VALUES(22,FALSE,NULL,'2019-03-17 21:08:53.610000','Cuidado, no se debe mezclar nunca con poliuretano',2.0E0,'Polietileno',20)
+INSERT INTO OFFER VALUES(23,FALSE,NULL,'2019-03-17 21:08:53.609000','Key para Mi Primera Encarta 2005, totalmente original, sin activar',5.0E0,'Mi encarta 2005',20)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 24
+COMMIT
+INSERT INTO USER VALUES(24,'admin@email.com','Mermela',100.0E0,'Paco','$2a$10$n0.MUtJOBVQxVoZn8ECNGuIHoTaxR.AsyeBcd168W4ghGCJHJkx/O','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 25
+COMMIT
+DELETE FROM OFFER WHERE ID=6
+COMMIT
+DELETE FROM OFFER WHERE ID=5
+COMMIT
+DELETE FROM OFFER WHERE ID=11
+INSERT INTO OFFER VALUES(11,TRUE,'1@a.com','2019-03-17 21:08:53.608000','Un term\u00f3metro que vino del planeta Mercurio, no confundir, el term\u00f3metro es digital.',5.0E0,'Term\u00f3metro de Mercurio',8)
+DELETE FROM USER WHERE ID=1
+INSERT INTO USER VALUES(1,'1@a.com','Obama',95.0E0,'Barack','$2a$10$gqEMzfuMSvP1ilmOSYvPCuGn3NFU2.mFbGUkuowTroK69PrmBgngy','ROLE_USER')
+COMMIT
+DELETE FROM USER WHERE ID=8
+INSERT INTO USER VALUES(8,'2@a.com','Sanz',105.0E0,'Paco','$2a$10$XgH4veFmEuQOw5QaR5zkoOmSrUQBzhZQ/ebiR7skNDvJQcNE00uXS','ROLE_USER')
+COMMIT
+/*C525*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C532*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C523*/DISCONNECT
+/*C526*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C527*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C528*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C531*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C529*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C524*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C530*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C534*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C535*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C533*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C536*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C542*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C537*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C541*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C538*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C540*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C539*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C543*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C545*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C544*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C546*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C549*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C547*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C548*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C551*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C550*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C552*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C558*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C553*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C559*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C555*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C562*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C557*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C554*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C556*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C560*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C561*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C563*/SET SCHEMA PUBLIC
+alter table offer drop constraint FKo0rdvexlxmyakcvw8b5aqidlk
+drop table offer if exists
+drop table user if exists
+drop sequence hibernate_sequence if exists
+create sequence hibernate_sequence start with 1 increment by 1
+create table offer (id bigint not null, buyed boolean, buyed_by varchar(255), date timestamp, description varchar(255), price double, title varchar(255), user_id bigint, primary key (id))
+create table user (id bigint not null, email varchar(255), last_name varchar(255), money double not null, name varchar(255), password varchar(255), role varchar(255), primary key (id))
+alter table user add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+alter table offer add constraint FKo0rdvexlxmyakcvw8b5aqidlk foreign key (user_id) references user
+INSERT INTO USER VALUES(1,'1@a.com','Obama',100.0E0,'Barack','$2a$10$flkOZ7Fx61Yi0g8qaLc3/eM7fBAMuanlzu7s22FOhNkB8dNes/AB2','ROLE_USER')
+INSERT INTO OFFER VALUES(2,FALSE,NULL,'2019-03-17 22:53:58.504000','Bendo play 2 totalmente jakiada con chip y todos los juegos',20.0E0,'Vendo Play 2 chipeada',1)
+INSERT INTO OFFER VALUES(3,FALSE,NULL,'2019-03-17 22:53:58.504000','S\u00f3lo 432543 yardas, opel corsa rojo en perfecto estado',50.0E0,'Vendo Opel Corsa',1)
+INSERT INTO OFFER VALUES(4,FALSE,NULL,'2019-03-17 22:53:58.504000','LED significa que es poderosa',50.0E0,'Acciones de Bankia',1)
+INSERT INTO OFFER VALUES(5,FALSE,NULL,'2019-03-17 22:53:58.504000','Caseros, los hizo la mama',50.0E0,'Mazapanes',1)
+INSERT INTO OFFER VALUES(6,FALSE,NULL,'2019-03-17 22:53:58.504000','Hechas con animal muerto',20.0E0,'Pelucas',1)
+INSERT INTO OFFER VALUES(7,FALSE,NULL,'2019-03-17 22:53:58.504000','LED significa que es poderosa',50.0E0,'Bombilla LED',1)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 8
+COMMIT
+INSERT INTO USER VALUES(8,'2@a.com','Sanz',100.0E0,'Paco','$2a$10$5E7b/OlICPfP/HQ2ky65l.O0t8gNQmfQBmVdBVsw5kia9tfn9GipO','ROLE_USER')
+INSERT INTO OFFER VALUES(9,FALSE,NULL,'2019-03-17 22:53:58.505000','Un term\u00f3metro que vino del planeta Mercurio, no confundir, el term\u00f3metro es digital.',5.0E0,'Term\u00f3metro de Mercurio',8)
+INSERT INTO OFFER VALUES(10,FALSE,NULL,'2019-03-17 22:53:58.505000','Vendo Plut\u00f3n para quien lo quiera, se lo cambi\u00e9 a un ni\u00f1o por chicles',60.0E0,'Plut\u00f3n',8)
+INSERT INTO OFFER VALUES(11,FALSE,NULL,'2019-03-17 22:53:58.505000','El elemento qu\u00edmico, no el planeta, no se vayan a confundir',30.0E0,'Mercurio',8)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 12
+COMMIT
+INSERT INTO USER VALUES(12,'3@a.com','Joestar',100.0E0,'Joseph','$2a$10$1fF9V54Oh0.j43nn1owsr.sLrnurSW96wSX5fc.a8UCa6b3qW9mym','ROLE_USER')
+INSERT INTO OFFER VALUES(13,FALSE,NULL,'2019-03-17 22:53:58.505000','Vendo una chancla porque perd\u00ed la otra para alguien que haya perdido un pierna o algo',9.0E0,'Chancla',12)
+INSERT INTO OFFER VALUES(14,FALSE,NULL,'2019-03-17 22:53:58.505000','No me vienen haciendo falta en casa as\u00ed que pa quien las quiera',5.0E0,'Cenizas de mi abuelo',12)
+INSERT INTO OFFER VALUES(15,FALSE,NULL,'2019-03-17 22:53:58.505000','Vendo una cocacolita',100.0E0,'Cocacola',12)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 16
+COMMIT
+INSERT INTO USER VALUES(16,'4@a.com','Buccarati',100.0E0,'Bruno','$2a$10$egFjQdca./f6tgtXmGIawemLysj9aLJU1JDNNwciqvuMfteqYHwN6','ROLE_USER')
+INSERT INTO OFFER VALUES(17,FALSE,NULL,'2019-03-17 22:53:58.506000','Ya no acelera como cuando era nuevo as\u00ed que lo vendo',21.0E0,'Acelerador de part\u00edculas',16)
+INSERT INTO OFFER VALUES(18,FALSE,NULL,'2019-03-17 22:53:58.506000','Para tener un aliento frequ\u00edsimo',1.0E0,'Chcicles de menta',16)
+INSERT INTO OFFER VALUES(19,FALSE,NULL,'2019-03-17 22:53:58.506000','Un teclado capaz de arreglar cualquier aver\u00eda en tu coche',6.0E0,'Teclado mec\u00e1nico',16)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 20
+COMMIT
+INSERT INTO USER VALUES(20,'5@a.com','Brando',100.0E0,'Dio','$2a$10$nF2cDcLzh2Wl1tZvPZ3S0uAU7rJdmSIrvQeJ7iZaQ05AfXcBG7O2y','ROLE_USER')
+INSERT INTO OFFER VALUES(21,FALSE,NULL,'2019-03-17 22:53:58.506000','Key para Mi Primera Encarta 2005, totalmente original, sin activar',5.0E0,'Mi encarta 2005',20)
+INSERT INTO OFFER VALUES(22,FALSE,NULL,'2019-03-17 22:53:58.506000','Cuidado, no se debe mezclar nunca con poliuretano',2.0E0,'Polietileno',20)
+INSERT INTO OFFER VALUES(23,FALSE,NULL,'2019-03-17 22:53:58.506000','Ara\u00f1a mucho as\u00ed que he decidido vender al gato, se llama Stroheim',11.0E0,'Gato',20)
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 24
+COMMIT
+INSERT INTO USER VALUES(24,'admin@email.com','Mermela',100.0E0,'Paco','$2a$10$mZE0DNHOU2C6OkG2yvdC1.WdqUBEFMWSjXxfzXVFQcl5hUQAXOWjy','ROLE_ADMIN')
+ALTER SEQUENCE PUBLIC.HIBERNATE_SEQUENCE RESTART WITH 25
+COMMIT
+/*C570*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C563*/DISCONNECT
+/*C564*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C571*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C565*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C569*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C566*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C567*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C572*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C568*/SET SCHEMA PUBLIC
+DISCONNECT
