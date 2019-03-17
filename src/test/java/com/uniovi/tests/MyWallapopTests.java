@@ -526,6 +526,32 @@ public class MyWallapopTests {
 		
 	}
 
+//	Ir a la opción de ofertas compradas del usuario y mostrar la lista. Comprobar que aparecen
+//	las ofertas que deben aparecer.
+	@Test
+	public void PR26() {
+		initdb();
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@a.com", "123456");
+		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offersView");
+		WebElement txtSearch = driver.findElement(By.name("searchText"));
+		txtSearch.click();
+		txtSearch.clear();
+		txtSearch.sendKeys("Cocacola");
+		driver.findElement(By.className("btn")).click();
+		SeleniumUtils.textoPresentePagina(driver, "Cocacola");
+		driver.findElement(By.id("buy-Cocacola-3@a.com")).click();
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "@id", "homeProfile",
+				PO_View.getTimeout());
+		// Tiene que haber un sólo elemento.
+		assertTrue(elementos.size() == 1);
+		// Ahora lo clickamos
+		elementos.get(0).click();
+		PO_HomeView.checkElement(driver, "text", "Estas son sus ofertas a la venta");
+		PO_HomeView.checkElement(driver, "text", "Cocacola");
+	}
+
+	
 //	Visualizar al menos cuatro páginas en Español/Inglés/Español (comprobando que algunas
 //			de las etiquetas cambian al idioma correspondiente). Página principal/Opciones Principales de
 //			Usuario/Listado de Usuarios de Admin/Vista de alta de Oferta
