@@ -38,7 +38,7 @@
 					sec:authorize="isAuthenticated() && hasRole('ROLE_USER')"
 					style="text-align: center; font-size: 15px; color: #d3dbd7;"><a><span
 						sec:authentication="principal.username" th:inline="text"> </span>
-						: <span th:text="${money}" th:inline="text"> </span> €</a></li>
+						: <span id="moneyNav" th:text="${money}" th:inline="text"> </span> €</a></li>
 				<li class="dropdown"><a id="btnLanguage" href="
 #"
 					class="dropdown-toggle" data-toggle="dropdown" role="button"

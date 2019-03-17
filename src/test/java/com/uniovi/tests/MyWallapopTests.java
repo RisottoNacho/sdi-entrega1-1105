@@ -451,8 +451,9 @@ public class MyWallapopTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "Cocacola");
 	}
 	
-//	Hacer una búsqueda escribiendo en el campo un texto que no exista y comprobar que se
-//	muestra la página que corresponde, con la lista de ofertas vacía.
+//	Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que deja
+//	un saldo positivo en el contador del comprobador. Y comprobar que el contador se actualiza
+// en la vista del comprador.
 	@Test
 	public void PR23() {
 		initdb();
@@ -462,14 +463,38 @@ public class MyWallapopTests {
 		WebElement txtSearch = driver.findElement(By.name("searchText"));
 		txtSearch.click();
 		txtSearch.clear();
-		txtSearch.sendKeys("Esta cosa no está entre mis preciosas ofertas");
+		txtSearch.sendKeys("Mazapanes");
 		driver.findElement(By.className("btn")).click();
-		SeleniumUtils.textoNoPresentePagina(driver, "Mazapanes");
-		SeleniumUtils.textoNoPresentePagina(driver, "Pelucas");
-		SeleniumUtils.textoNoPresentePagina(driver, "Acciones de Bankia");
-		SeleniumUtils.textoNoPresentePagina(driver, "Mercurio");
-		SeleniumUtils.textoNoPresentePagina(driver, "Cocacola");
+		SeleniumUtils.textoPresentePagina(driver, "Mazapanes");
+		SeleniumUtils.esperarSegundos(driver, 2);
+		driver.findElement(By.id("buy-Mazapanes-1@a.com")).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		assertTrue(driver.findElement(By.id("moneyNav")).getText().compareTo("50.0") == 0);
+		
 	}
+	
+//	Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que deja
+//	un saldo positivo en el contador del comprobador. Y comprobar que el contador se actualiza
+// en la vista del comprador.
+	@Test
+	public void PR24() {
+		initdb();
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "3@a.com", "123456");
+		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offersView");
+		WebElement txtSearch = driver.findElement(By.name("searchText"));
+		txtSearch.click();
+		txtSearch.clear();
+		txtSearch.sendKeys("Mazapanes");
+		driver.findElement(By.className("btn")).click();
+		SeleniumUtils.textoPresentePagina(driver, "Mazapanes");
+		SeleniumUtils.esperarSegundos(driver, 2);
+		driver.findElement(By.id("buy-Mazapanes-1@a.com")).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		assertTrue(driver.findElement(By.id("moneyNav")).getText().compareTo("50.0") == 0);
+		
+	}
+
 
 //	Visualizar al menos cuatro páginas en Español/Inglés/Español (comprobando que algunas
 //			de las etiquetas cambian al idioma correspondiente). Página principal/Opciones Principales de

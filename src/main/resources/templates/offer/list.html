@@ -35,7 +35,7 @@
 						<td th:text="${offer.user.name +' '+offer.user.lastName}"></td>
 						<td th:if="${money >= offer.price}"><a
 							th:if="!${offer.buyed}"
-							th:href="${'/offer/buy/' + offer.id+'-'+page.getNumber()}"><span
+							th:href="${'/offer/buy/' + offer.id+'-'+page.getNumber()}" th:id ="${'buy-'+offer.title+'-'+offer.user.email}" ><span
 								th:text="#{Offers.list.buy}"></span></a></td>
 						<th th:unless="${money >= offer.price}"><a
 							th:if="!${offer.buyed}"><span
