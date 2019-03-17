@@ -5,57 +5,56 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2>Registráte como usuario</h2>
+		<h2 th:text="#{singup.header}">Registráte como usuario</h2>
 		<form class="form-horizontal" method="post" action="/signup"
 			th:object="${user}">
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="email">Email:</label>
+				<label class="control-label col-sm-2" for="email"><span th:text="#{singup.email}"></span></label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="email"
-						placeholder="Ejemplo: Osama@gmail.com" required="true" /> <span
+						th:placeholder="#{singup.email.suggest}" required="true" /> <span
 						class="text-danger" th:if="${#fields.hasErrors('email')}"
 						th:errors="*{email}"/>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="name">Nombre:</label>
+				<label class="control-label col-sm-2" for="name"><span th:text="#{singup.name}"></span></label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="name"
-						placeholder="Ejemplo: Juan" required="true" /> <span
+						th:placeholder="#{singup.name.suggest}" required="true" /> <span
 						class="text-danger" th:if="${#fields.hasErrors('name')}"
 						th:errors="*{name}" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="lastName">Apellidos:</label>
+				<label class="control-label col-sm-2" for="lastName"><span th:text="#{singup.surname}"></span></label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="lastName"
-						placeholder="Ejemplo: Peréz Almonte" required="true" /> <span
+						th:placeholder="#{singup.surname.suggest}" required="true" /> <span
 						class="text-danger" th:if="${#fields.hasErrors('lastName')}"
 						th:errors="*{lastName}" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="password">Password:</label>
+				<label class="control-label col-sm-2" for="password"><span th:text="#{singup.pass}"></span></label>
 				<div class="col-sm-10">
 					<input type="password" class="form-control" name="password"
-						placeholder="Inserte la contraseña" /> <span class="text-danger"
+						th:placeholder="#{singup.pass.suggest}" /> <span class="text-danger"
 						th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="passwordConfirm">Repita
-					el Password:</label>
+				<label class="control-label col-sm-2" for="passwordConfirm"><span th:text="#{singup.passconfirm}"></span></label>
 				<div class="col-sm-10">
 					<input type="password" class="form-control" name="passwordConfirm"
-						placeholder="Repita la contraseña" /> <span class="text-danger"
+						th:placeholder="#{singup.passconfirm.suggest}" /> <span class="text-danger"
 						th:if="${#fields.hasErrors('passwordConfirm')}"
 						th:errors="*{passwordConfirm}" />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-primary">Enviar</button>
+					<button type="submit" class="btn btn-primary"><span th:text="#{singup.singin}"></span></button>
 				</div>
 			</div>
 		</form>

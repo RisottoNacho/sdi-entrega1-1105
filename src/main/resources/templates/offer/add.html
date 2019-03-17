@@ -15,7 +15,7 @@
 				<label class="control-label col-sm-2" for="title" th:text = "#{Offer.title}">Título:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="title"
-						placeholder="Titulo corto de la oferta (18 caracteres)"
+						th:placeholder="#{Offer.title.suggest}"
 						required="true" /> <span class="text-danger"
 						th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
 				</div>
@@ -25,7 +25,7 @@
 				<label class="control-label col-sm-2" for="description" th:text = "#{Offer.description}">Descripción:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="description"
-						placeholder="Descripcion de la oferta (140 caracteres)"
+						th:placeholder="#{Offer.description.suggest}"
 						required="true" /> <span class="text-danger"
 						th:if="${#fields.hasErrors('description')}"
 						th:errors="*{description}" />
@@ -37,7 +37,7 @@
 				<label class="control-label col-sm-2" for="price" th:text = "#{Offer.price}">Precio:</label>
 				<div class="col-sm-10">
 					<input type="number" class="form-control" name="price" step="0.01"
-						placeholder="Precio al que vender la oferta" required="true" /> <span
+						th:placeholder="#{Offer.price.suggest}" required="true" /> <span
 						class="text-danger" th:if="${#fields.hasErrors('price')}"
 						th:errors="*{price}" />
 				</div>
