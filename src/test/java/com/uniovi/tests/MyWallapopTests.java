@@ -194,11 +194,11 @@ public class MyWallapopTests {
 	public void PR02() {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		PO_RegisterView.fillForm(driver, " ", "Josefo", "Perez", "77777", "77777");
-		PO_View.checkKey(driver, "Error.signup.email.style", PO_Properties.getSPANISH());
+		PO_RegisterView.checkElement(driver, "text", "Este campo no puede estar vacío");
 		PO_RegisterView.fillForm(driver, "pe@gmail.com", " ", "Perez", "77777", "77777");
-		PO_View.checkKey(driver, "Error.signup.name.length", PO_Properties.getSPANISH());
+		PO_RegisterView.checkElement(driver, "text", "Este campo no puede estar vacío");
 		PO_RegisterView.fillForm(driver, "pe@gmail.com", "Josefo", " ", "77777", "77777");
-		PO_View.checkKey(driver, "Error.signup.surName.length", PO_Properties.getSPANISH());
+		PO_RegisterView.checkElement(driver, "text", "Este campo no puede estar vacío");
 	}
 
 	// Registro de Usuario con datos inválidos (repetición de contraseña inválida).
@@ -206,19 +206,19 @@ public class MyWallapopTests {
 	public void PR03() {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		PO_RegisterView.fillForm(driver, "pe@gmail.com", "Josefo", "Perez", "77777", "55555");
-		PO_View.getP();
 		PO_RegisterView.checkElement(driver, "text", "Las contraseñas no coinciden");
 	}
 
-	// PR04. OPción de navegación. Cambio de idioma de Español a Ingles y vuelta a
-	// Español
+	// Registro de Usuario con datos inválidos (email existente).
+	@Test
 	public void PR04() {
-		PO_HomeView.checkChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
-				PO_Properties.getENGLISH());
-		// SeleniumUtils.esperarSegundos(driver, 2);
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		PO_RegisterView.fillForm(driver, "1@a.com", "Josefo", "Perez", "77777", "77777");
+		PO_RegisterView.checkElement(driver, "text", "Este Email ya existe");
 	}
 
 	// PR05. Prueba del formulario de registro. registro con datos correctos
+	@Test
 	public void PR05() {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");

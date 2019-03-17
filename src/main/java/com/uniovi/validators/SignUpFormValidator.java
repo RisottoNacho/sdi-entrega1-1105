@@ -19,6 +19,9 @@ public class SignUpFormValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Error.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "Error.empty");
 		if (!EmailCheck.check(user.getEmail())) {
 			errors.rejectValue("email", "Error.signup.email.style");
 		}
