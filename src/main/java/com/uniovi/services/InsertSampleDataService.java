@@ -48,7 +48,7 @@ public class InsertSampleDataService {
 				add(new Offer("Bombilla LED",new Date(System.currentTimeMillis()),"LED significa que es poderosa",50.0,user1));
 				add(new Offer("Pelucas",new Date(System.currentTimeMillis()),"Hechas con animal muerto",20.0,user1));
 				add(new Offer("Mazapanes",new Date(System.currentTimeMillis()),"Caseron, los hizo la mama",50.0,user1));
-				add(new Offer("Acciones de ",new Date(System.currentTimeMillis()),"LED significa que es poderosa",50.0,user1));
+				add(new Offer("Acciones de Bankia",new Date(System.currentTimeMillis()),"LED significa que es poderosa",50.0,user1));
 			}
 		};
 		user1.setOffers(user1Offers);

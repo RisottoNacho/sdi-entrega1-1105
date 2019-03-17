@@ -18,7 +18,7 @@
 		<li class="page-item"
 			th:if='${page.getNumber()+1 <= page.getTotalPages()-1}'><a
 			class="page-link" th:href="@{'?page='+${page.getNumber()+1} }"
-			th:text="${page.getNumber()+2}"></a></li>
+			th:text="${page.getNumber()+2}" id="nextPage"></a></li>
 
 		<!-- Última -->
 		<li class="page-item"><a class="page-link"

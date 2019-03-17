@@ -399,6 +399,78 @@ public class MyWallapopTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "Cocacola");
 	}
 
+//	Ir a la lista de ofertas, borrar la última oferta de la lista, comprobar que la lista se actualiza y
+	// que la oferta desaparece
+	@Test
+	public void PR20() {
+		initdb();
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "3@a.com", "123456");
+		SeleniumUtils.textoPresentePagina(driver, "Chancla");
+		driver.findElement(By.id("del-Chancla")).click();
+		SeleniumUtils.textoNoPresentePagina(driver, "Chancla");
+	}
+
+//	Hacer una búsqueda con el campo vacío y comprobar que se muestra la página que
+//	corresponde con el listado de las ofertas existentes en el sistema
+	@Test
+	public void PR21() {
+		initdb();
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "3@a.com", "123456");
+		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offersView");
+		driver.findElement(By.className("btn")).click();
+		List<WebElement> elementos;
+		for (int i = 0; i < 2; i++) {
+			elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
+			assertTrue(elementos.size() == 5);
+			driver.findElement(By.id("nextPage")).click();
+		}
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
+		assertTrue(elementos.size() == 5);
+
+	}
+
+//	Hacer una búsqueda escribiendo en el campo un texto que no exista y comprobar que se
+//	muestra la página que corresponde, con la lista de ofertas vacía.
+	@Test
+	public void PR22() {
+		initdb();
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "3@a.com", "123456");
+		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offersView");
+		WebElement txtSearch = driver.findElement(By.name("searchText"));
+		txtSearch.click();
+		txtSearch.clear();
+		txtSearch.sendKeys("Esta cosa no está entre mis preciosas ofertas");
+		driver.findElement(By.className("btn")).click();
+		SeleniumUtils.textoNoPresentePagina(driver, "Mazapanes");
+		SeleniumUtils.textoNoPresentePagina(driver, "Pelucas");
+		SeleniumUtils.textoNoPresentePagina(driver, "Acciones de Bankia");
+		SeleniumUtils.textoNoPresentePagina(driver, "Mercurio");
+		SeleniumUtils.textoNoPresentePagina(driver, "Cocacola");
+	}
+	
+//	Hacer una búsqueda escribiendo en el campo un texto que no exista y comprobar que se
+//	muestra la página que corresponde, con la lista de ofertas vacía.
+	@Test
+	public void PR23() {
+		initdb();
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "3@a.com", "123456");
+		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offersView");
+		WebElement txtSearch = driver.findElement(By.name("searchText"));
+		txtSearch.click();
+		txtSearch.clear();
+		txtSearch.sendKeys("Esta cosa no está entre mis preciosas ofertas");
+		driver.findElement(By.className("btn")).click();
+		SeleniumUtils.textoNoPresentePagina(driver, "Mazapanes");
+		SeleniumUtils.textoNoPresentePagina(driver, "Pelucas");
+		SeleniumUtils.textoNoPresentePagina(driver, "Acciones de Bankia");
+		SeleniumUtils.textoNoPresentePagina(driver, "Mercurio");
+		SeleniumUtils.textoNoPresentePagina(driver, "Cocacola");
+	}
+
 //	Visualizar al menos cuatro páginas en Español/Inglés/Español (comprobando que algunas
 //			de las etiquetas cambian al idioma correspondiente). Página principal/Opciones Principales de
 //			Usuario/Listado de Usuarios de Admin/Vista de alta de Oferta
