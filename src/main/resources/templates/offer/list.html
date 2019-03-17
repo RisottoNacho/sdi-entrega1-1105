@@ -5,7 +5,7 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2 th:text="#{Offers.list.header}">Ofertas</h2>
+		<h2 th:text="#{Offers.list.header}"></h2>
 		<form class="navbar-form" action="/offer/list">
 			<div class="form-group">
 				<input name="searchText" type="text" class="form-control" size="50"
@@ -15,8 +15,7 @@
 				<span th:text="#{Offers.list.searchButton}"></span>
 			</button>
 		</form>
-		</strong><strong><p th:text="#{Offers.list.subtitle}">Las ofertas
-				que actualmente figuran en el sistema son las siguientes:</p></strong>
+		</strong><strong><p th:text="#{Offers.list.subtitle}"></p></strong>
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tableOffers"
 				id="tableOffers">

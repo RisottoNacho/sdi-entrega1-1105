@@ -7,8 +7,8 @@
 	<div class="container"
 		sec:authorize="isAuthenticated() && hasRole('ROLE_ADMIN')">
 		<h2 th:text="#{Users}">Usuarios</h2>
-		<p th:text="#{Users.subtitle}">Los usuarios que actualmente figuran en el sistema son los
-			siguientes:</p>
+		<p th:text="#{Users.subtitle}">Los usuarios que actualmente
+			figuran en el sistema son los siguientes:</p>
 		<form th:action='@{/user/delete}' method="POST" th:object="${user}">
 			<div class="table-responsive">
 				<table class="table table-hover">
@@ -17,23 +17,22 @@
 							<th class="col-md-1" th:text="#{Users.select}"></th>
 							<th class="col-md-3" th:text="#{Users.email}"></th>
 							<th class="col-md-3" th:text="#{Users.name}">Nombre</th>
-							<th class="col-md-3"th:text="#{Users.surname}">Apellidos</th>
+							<th class="col-md-3" th:text="#{Users.surname}">Apellidos</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr id="tobla" class="clickable-row" th:each="user : ${usersList}">
+						<tr id="tobla"  th:each="user : ${usersList}">
 							<td align="center"><input type="checkbox"
-								th:name="idChecked" th:value="${user.id}" /></td>
+								th:name="idChecked" th:value="${user.id}" th:id="${'cb-'+user.email}"/></td>
 							<td th:text="${user.email}"></td>
 							<td th:text="${user.name}"></td>
 							<td th:text="${user.lastName}"></td>
 						</tr>
 					</tbody>
 				</table>
-				<button type="submit" name='delete' value="delete"
+				<button type="submit" th:name='delete' value="delete"
 					class='btn btn-primary btn-sm' th:text="#{Users.delete}"
-					data-toggle="tooltip" data-placement="right"
-					th:title="#{delete.selected}"></button>
+					data-placement="right" th:title="#{delete.selected}"></button>
 			</div>
 		</form>
 	</div>

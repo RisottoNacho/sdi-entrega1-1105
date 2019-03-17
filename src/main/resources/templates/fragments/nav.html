@@ -12,24 +12,24 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/home"><span th:text="#{Nav.home}"></span></a></li>
-				<li sec:authorize="hasRole('ROLE_USER')" id="offers-menu"
+				<li sec:authorize="hasRole('ROLE_USER')" id="offers-dropdown"
 					class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <span th:text="#{Nav.offers}"></span>
 						<span class="caret"></span>
 				</a>
-					<ul class="dropdown-menu">
-						<li><a href="/offer/add" th:text="#{Nav.offers.add}">Agregar
+					<ul id="offers-menu" class="dropdown-menu">
+						<li><a href="/offer/add" th:text="#{Nav.offers.add}" id ="offerAdd" >Agregar
 								Oferta</a></li>
 						<li><a href="/offer/list" th:text="#{Nav.offers.view}">Ver
 								Ofertas</a></li>
 					</ul></li>
-				<li id="users-menu" class="dropdown"
+				<li id="users-dropdown" class="dropdown"
 					sec:authorize="hasRole('ROLE_ADMIN')"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#">
 					<span th:text="#{Nav.users}"></span>	 <span class="caret"></span>
 				</a>
-					<ul class="dropdown-menu">
-						<li><a href="/user/list" th:text="#{Nav.users.view}">Ver
+					<ul id="users-menu" class="dropdown-menu">
+						<li><a href="/user/list" th:text="#{Nav.users.view}" id = "viewUsers">Ver
 								Usuarios</a></li>
 					</ul></li>
 			</ul>

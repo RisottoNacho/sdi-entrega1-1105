@@ -30,6 +30,7 @@ import com.uniovi.services.RolesService;
 import com.uniovi.services.UsersService;
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
+import com.uniovi.tests.pageobjects.PO_NavView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
@@ -257,20 +258,117 @@ public class MyWallapopTests {
 		PO_HomeView.checkElement(driver, "text", "Email o contraseña incorrectos.");
 	}
 
-	// Inicio de sesión con datos inválidos (usuario estándar, email no existente en la aplicación).
+	// Inicio de sesión con datos inválidos (usuario estándar, email no existente en
+	// la aplicación).
 	@Test
 	public void PR09() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "145@a.com", "123456");
 		PO_HomeView.checkElement(driver, "text", "Email o contraseña incorrectos.");
 	}
-	
-	// Inicio de sesión con datos inválidos (usuario estándar, email no existente en la aplicación).
+
+	// Hacer click en la opción de salir de sesión y comprobar que se redirige a la
+	// página de inicio
+	// de sesión (Login).
 	@Test
 	public void PR10() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillForm(driver, "145@a.com", "123456");
-		PO_HomeView.checkElement(driver, "text", "Email o contraseña incorrectos.");
+		PO_LoginView.fillForm(driver, "1@a.com", "123456");
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_HomeView.checkElement(driver, "text", "Identifícate");
+	}
+
+	// Comprobar que el botón cerrar sesión no está visible si el usuario no está
+	// autenticado.
+	@Test
+	public void PR11() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@a.com", "123456");
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		SeleniumUtils.textoNoPresentePagina(driver, "Desconectar");
+	}
+
+	// Mostrar el listado de usuarios y comprobar que se muestran todos los que
+	// existen en el sistema.
+	@Test
+	public void PR12() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_NavView.clickDropdownMenuOption(driver, "users-dropdown", "users-menu", "viewUsers");
+		SeleniumUtils.textoPresentePagina(driver, "1@a.com");
+		SeleniumUtils.textoPresentePagina(driver, "2@a.com");
+		SeleniumUtils.textoPresentePagina(driver, "3@a.com");
+		SeleniumUtils.textoPresentePagina(driver, "4@a.com");
+		SeleniumUtils.textoPresentePagina(driver, "5@a.com");
+	}
+
+//	Ir a la lista de usuarios, borrar el primer usuario de la lista, comprobar que la lista se actualiza
+//	y dicho usuario desaparece
+	@Test
+	public void PR13() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_NavView.clickDropdownMenuOption(driver, "users-dropdown", "users-menu", "viewUsers");
+		SeleniumUtils.textoPresentePagina(driver, "1@a.com");
+		driver.findElement(By.id("cb-1@a.com")).click();
+		driver.findElement(By.name("delete")).click();
+		SeleniumUtils.textoNoPresentePagina(driver, "1@a.com");
+	}
+	
+//	Ir a la lista de usuarios, borrar el último usuario de la lista, comprobar que la lista se actualiza
+	// y dicho usuario desaparece
+	@Test
+	public void PR14() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_NavView.clickDropdownMenuOption(driver, "users-dropdown", "users-menu", "viewUsers");
+		SeleniumUtils.textoPresentePagina(driver, "1@a.com");
+		driver.findElement(By.id("cb-1@a.com")).click();
+		driver.findElement(By.name("delete")).click();
+		SeleniumUtils.textoNoPresentePagina(driver, "1@a.com");
+	}
+
+//	Visualizar al menos cuatro páginas en Español/Inglés/Español (comprobando que algunas
+//			de las etiquetas cambian al idioma correspondiente). Página principal/Opciones Principales de
+//			Usuario/Listado de Usuarios de Admin/Vista de alta de Oferta
+	@Test
+	public void PR27() {
+		SeleniumUtils.textoPresentePagina(driver, "Regístrese ahora para empezar a comprar");
+		PO_NavView.changeIdiom(driver, "btnEnglish");
+		SeleniumUtils.textoPresentePagina(driver, "Sing in now and start buying");
+		PO_NavView.changeIdiom(driver, "btnSpanish");
+		SeleniumUtils.textoPresentePagina(driver, "Regístrese ahora para empezar a comprar");
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@a.com", "123456");
+		SeleniumUtils.textoPresentePagina(driver, "Usuario autentificado como");
+		PO_NavView.changeIdiom(driver, "btnEnglish");
+		SeleniumUtils.textoPresentePagina(driver, "These are your purchased offers");
+		PO_NavView.changeIdiom(driver, "btnSpanish");
+		SeleniumUtils.textoPresentePagina(driver, "Estas son sus ofertas compradas");
+
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_HomeView.checkElement(driver, "text", "admin@email.com");
+		PO_NavView.clickDropdownMenuOption(driver, "users-dropdown", "users-menu", "viewUsers");
+		SeleniumUtils.textoPresentePagina(driver,
+				"Los usuarios que actualmente figuran en el sistema son los siguientes");
+		PO_NavView.changeIdiom(driver, "btnEnglish");
+		SeleniumUtils.textoPresentePagina(driver,
+				"The users currently registered in the system are the ones listed bellow");
+		PO_NavView.changeIdiom(driver, "btnSpanish");
+		SeleniumUtils.textoPresentePagina(driver,
+				"Los usuarios que actualmente figuran en el sistema son los siguientes");
+
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@a.com", "123456");
+		SeleniumUtils.textoPresentePagina(driver, "Usuario autentificado como");
+		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offerAdd");
+		SeleniumUtils.textoPresentePagina(driver, "Ofertas");
+		PO_NavView.changeIdiom(driver, "btnEnglish");
+		SeleniumUtils.textoPresentePagina(driver, "Offers");
+		PO_NavView.changeIdiom(driver, "btnSpanish");
+		SeleniumUtils.textoPresentePagina(driver, "Ofertas");
 	}
 
 	public void PR06d() {
