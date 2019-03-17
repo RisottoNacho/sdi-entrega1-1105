@@ -201,11 +201,13 @@ public class MyWallapopTests {
 		PO_View.checkKey(driver, "Error.signup.surName.length", PO_Properties.getSPANISH());
 	}
 
-	// PR03. OPción de navegación. Pinchar en el enlace Identificate en la página
-	// home
+	// Registro de Usuario con datos inválidos (repetición de contraseña inválida).
 	@Test
 	public void PR03() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		PO_RegisterView.fillForm(driver, "pe@gmail.com", "Josefo", "Perez", "77777", "55555");
+		PO_View.getP();
+		PO_RegisterView.checkElement(driver, "text", "Las contraseñas no coinciden");
 	}
 
 	// PR04. OPción de navegación. Cambio de idioma de Español a Ingles y vuelta a

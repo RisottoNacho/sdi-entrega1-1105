@@ -24,14 +24,14 @@ public class PO_Properties {
 	static Properties p = new Properties();
 	public PO_Properties(String Path)
 	{
-		this.Path = Path;
-		try {
+		//this.Path = Path;
+		/*try {
 			p.load(new FileReader(Path));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		//p.getProperty();
 	}
 	//
