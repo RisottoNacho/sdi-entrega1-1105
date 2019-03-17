@@ -349,16 +349,58 @@ public class MyWallapopTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "4@a.com");
 		SeleniumUtils.textoNoPresentePagina(driver, "3@a.com");
 	}
-	
+
 //	Ir al formulario de alta de oferta, rellenarla con datos válidos y pulsar el botón Submit.
 //	Comprobar que la oferta sale en el listado de ofertas de dicho usuario.
 	@Test
 	public void PR16() {
+		initdb();
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "3@a.com", "123456");
 		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offerAdd");
 		PO_AddOfferView.fillForm(driver, "Selenium test", "This is a test for the webPage", "6.0");
 		PO_HomeView.checkElement(driver, "text", "Selenium test");
+	}
+
+//	Ir al formulario de alta de oferta, rellenarla con datos inválidos (campo título vacío) y pulsar
+//	el botón Submit. Comprobar que se muestra el mensaje de campo obligatorio
+	@Test
+	public void PR17() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "3@a.com", "123456");
+		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offerAdd");
+		PO_AddOfferView.fillForm(driver, " ", "This is a test for the webPage", "6.0");
+		PO_LoginView.checkElement(driver, "text", "Este campo no puede estar vacío");
+		PO_AddOfferView.fillForm(driver, "Selenium test", " ", "6.0");
+		PO_LoginView.checkElement(driver, "text", "Este campo no puede estar vacío");
+		PO_AddOfferView.fillForm(driver, "Selenium test", "This is a test for the webPage", " ");
+		PO_LoginView.checkElement(driver, "text", "Este campo no puede estar vacío");
+	}
+
+//	Mostrar el listado de ofertas para dicho usuario y comprobar que se muestran todas los que
+	// existen para este usuario.
+	@Test
+	public void PR18() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "3@a.com", "123456");
+		PO_HomeView.checkElement(driver, "text", "Cenizas de mi abuelo");
+		PO_HomeView.checkElement(driver, "text", "Cocacola");
+		PO_HomeView.checkElement(driver, "text", "Chancla");
+	}
+
+//	Ir a la lista de ofertas, borrar la primera oferta de la lista, comprobar que la lista se actualiza y
+//	que la oferta desaparece.
+	@Test
+	public void PR19() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "3@a.com", "123456");
+		SeleniumUtils.textoPresentePagina(driver, "Cocacola");
+		driver.findElement(By.id(id));
+		SeleniumUtils.esperarSegundos(driver, 2);
+		offers.get(0).click();
+		// driver.findElement(By.id("Eliminar")).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
+		SeleniumUtils.textoNoPresentePagina(driver, "Cocacola");
 	}
 
 //	Visualizar al menos cuatro páginas en Español/Inglés/Español (comprobando que algunas
