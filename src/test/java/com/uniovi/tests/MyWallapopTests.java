@@ -314,18 +314,58 @@ public class MyWallapopTests {
 		driver.findElement(By.name("delete")).click();
 		SeleniumUtils.textoNoPresentePagina(driver, "1@a.com");
 	}
-	
+
 //	Ir a la lista de usuarios, borrar el último usuario de la lista, comprobar que la lista se actualiza
 	// y dicho usuario desaparece
 	@Test
 	public void PR14() {
+		initdb();
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
 		PO_NavView.clickDropdownMenuOption(driver, "users-dropdown", "users-menu", "viewUsers");
-		SeleniumUtils.textoPresentePagina(driver, "1@a.com");
-		driver.findElement(By.id("cb-1@a.com")).click();
+		SeleniumUtils.textoPresentePagina(driver, "5@a.com");
+		driver.findElement(By.id("cb-5@a.com")).click();
 		driver.findElement(By.name("delete")).click();
-		SeleniumUtils.textoNoPresentePagina(driver, "1@a.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "5@a.com");
+	}
+
+//	Ir a la lista de usuarios, borrar 3 usuarios, comprobar que la lista se actualiza y dichos
+//	usuarios desaparecen.
+	@Test
+	public void PR15() {
+		initdb();
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_NavView.clickDropdownMenuOption(driver, "users-dropdown", "users-menu", "viewUsers");
+		SeleniumUtils.textoPresentePagina(driver, "5@a.com");
+		SeleniumUtils.textoPresentePagina(driver, "4@a.com");
+		SeleniumUtils.textoPresentePagina(driver, "3@a.com");
+		driver.findElement(By.id("cb-5@a.com")).click();
+		driver.findElement(By.id("cb-4@a.com")).click();
+		driver.findElement(By.id("cb-3@a.com")).click();
+		driver.findElement(By.name("delete")).click();
+		SeleniumUtils.textoNoPresentePagina(driver, "5@a.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "4@a.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "3@a.com");
+	}
+	
+//	Ir al formulario de alta de oferta, rellenarla con datos válidos y pulsar el botón Submit.
+//	Comprobar que la oferta sale en el listado de ofertas de dicho usuario.
+	@Test
+	public void PR16() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_NavView.clickDropdownMenuOption(driver, "users-dropdown", "users-menu", "viewUsers");
+		SeleniumUtils.textoPresentePagina(driver, "5@a.com");
+		SeleniumUtils.textoPresentePagina(driver, "4@a.com");
+		SeleniumUtils.textoPresentePagina(driver, "3@a.com");
+		driver.findElement(By.id("cb-5@a.com")).click();
+		driver.findElement(By.id("cb-4@a.com")).click();
+		driver.findElement(By.id("cb-3@a.com")).click();
+		driver.findElement(By.name("delete")).click();
+		SeleniumUtils.textoNoPresentePagina(driver, "5@a.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "4@a.com");
+		SeleniumUtils.textoNoPresentePagina(driver, "3@a.com");
 	}
 
 //	Visualizar al menos cuatro páginas en Español/Inglés/Español (comprobando que algunas
