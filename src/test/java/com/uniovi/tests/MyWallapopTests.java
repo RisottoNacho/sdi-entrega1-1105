@@ -62,6 +62,7 @@ public class MyWallapopTests {
 	// Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox64, Geckdriver022);
 	static String URL = "http://localhost:8090";
+	static String URLremota = "http://urlsdispring:xxxx";
 
 	public static WebDriver getDriver(String PathFirefox, String Geckdriver) {
 		System.setProperty("webdriver.firefox.bin", PathFirefox);
@@ -184,6 +185,8 @@ public class MyWallapopTests {
 	@Test
 	public void PR01() {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		PO_RegisterView.fillForm(driver, "pe@gmail.com", "Josefo", "Perez", "77777", "77777");
+		PO_View.checkElement(driver, "text", "Estas son sus ofertas a la venta");
 	}
 
 	// PR02. OPción de navegación. Pinchar en el enlace Registro en la página home
