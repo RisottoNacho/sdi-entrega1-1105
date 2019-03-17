@@ -1,5 +1,7 @@
 package com.uniovi.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.OffersService;
@@ -78,12 +82,26 @@ public class UsersController {
 		return "user/list";
 	}
 
+	@PostMapping("/user/delete")
+	public String delete(@RequestParam(value= "idChecked", required = false) List<String> idUsers) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		if (idUsers != null) {
+			for (String id : idUsers) {
+				long iduser = Long.parseLong(id);
+				usersService.deleteUser(iduser, activeUser);
+			}
+		}
+		return "redirect:/user/list";
+	}
+
 	@RequestMapping("/user/delete/{id}")
 	public String delete(@PathVariable Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		usersService.deleteUser(id,activeUser);
+		usersService.deleteUser(id, activeUser);
 		return "redirect:/user/list";
 	}
 }
