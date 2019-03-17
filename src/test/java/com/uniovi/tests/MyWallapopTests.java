@@ -1,5 +1,6 @@
 package com.uniovi.tests;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
@@ -16,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -450,7 +452,7 @@ public class MyWallapopTests {
 		SeleniumUtils.textoNoPresentePagina(driver, "Mercurio");
 		SeleniumUtils.textoNoPresentePagina(driver, "Cocacola");
 	}
-	
+
 //	Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que deja
 //	un saldo positivo en el contador del comprobador. Y comprobar que el contador se actualiza
 // en la vista del comprador.
@@ -466,35 +468,63 @@ public class MyWallapopTests {
 		txtSearch.sendKeys("Mazapanes");
 		driver.findElement(By.className("btn")).click();
 		SeleniumUtils.textoPresentePagina(driver, "Mazapanes");
-		SeleniumUtils.esperarSegundos(driver, 2);
 		driver.findElement(By.id("buy-Mazapanes-1@a.com")).click();
-		SeleniumUtils.esperarSegundos(driver, 2);
 		assertTrue(driver.findElement(By.id("moneyNav")).getText().compareTo("50.0") == 0);
-		
+
 	}
-	
+
 //	Sobre una búsqueda determinada (a elección de desarrollador), comprar una oferta que deja
-//	un saldo positivo en el contador del comprobador. Y comprobar que el contador se actualiza
-// en la vista del comprador.
+//	un saldo 0 en el contador del comprobador. Y comprobar que el contador se actualiza correctamente en
+//	la vista del comprador. .
 	@Test
 	public void PR24() {
 		initdb();
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillForm(driver, "3@a.com", "123456");
+		PO_LoginView.fillForm(driver, "1@a.com", "123456");
 		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offersView");
 		WebElement txtSearch = driver.findElement(By.name("searchText"));
 		txtSearch.click();
 		txtSearch.clear();
-		txtSearch.sendKeys("Mazapanes");
+		txtSearch.sendKeys("Cocacola");
 		driver.findElement(By.className("btn")).click();
-		SeleniumUtils.textoPresentePagina(driver, "Mazapanes");
-		SeleniumUtils.esperarSegundos(driver, 2);
-		driver.findElement(By.id("buy-Mazapanes-1@a.com")).click();
-		SeleniumUtils.esperarSegundos(driver, 2);
-		assertTrue(driver.findElement(By.id("moneyNav")).getText().compareTo("50.0") == 0);
-		
+		SeleniumUtils.textoPresentePagina(driver, "Cocacola");
+		driver.findElement(By.id("buy-Cocacola-3@a.com")).click();
+		assertTrue(driver.findElement(By.id("moneyNav")).getText().compareTo("0.0") == 0);
+
 	}
 
+//	Sobre una búsqueda determinada (a elección de desarrollador), intentar comprar una oferta
+//	que esté por encima de saldo disponible del comprador. Y comprobar que se muestra el mensaje de
+	// saldo no suficiente
+	@Test
+	public void PR25() {
+		initdb();
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@a.com", "123456");
+		PO_NavView.clickDropdownMenuOption(driver, "offers-dropdown", "offers-menu", "offersView");
+		WebElement txtSearch = driver.findElement(By.name("searchText"));
+		txtSearch.click();
+		txtSearch.clear();
+		txtSearch.sendKeys("Cocacola");
+		driver.findElement(By.className("btn")).click();
+		SeleniumUtils.textoPresentePagina(driver, "Cocacola");
+		driver.findElement(By.id("buy-Cocacola-3@a.com")).click();
+		assertTrue(driver.findElement(By.id("moneyNav")).getText().compareTo("0.0") == 0);
+		txtSearch = driver.findElement(By.name("searchText"));
+		txtSearch.click();
+		txtSearch.clear();
+		txtSearch.sendKeys("Chancla");
+		driver.findElement(By.className("btn")).click();
+		SeleniumUtils.textoPresentePagina(driver, "Chancla");
+		SeleniumUtils.textoPresentePagina(driver, "Saldo insuficiente");
+		try {
+			driver.findElement(By.id("buy-Chancla-3@a.com")).click();
+			assertFalse(true);
+		} catch (NoSuchElementException e) {
+			assertFalse(false);
+		}
+		
+	}
 
 //	Visualizar al menos cuatro páginas en Español/Inglés/Español (comprobando que algunas
 //			de las etiquetas cambian al idioma correspondiente). Página principal/Opciones Principales de
