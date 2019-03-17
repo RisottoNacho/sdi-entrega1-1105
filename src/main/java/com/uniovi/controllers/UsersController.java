@@ -78,6 +78,8 @@ public class UsersController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
+		if(activeUser.getRole() == "ROLE_USER")
+			return "/home";
 		model.addAttribute("usersList", usersService.getUsers(activeUser));
 		return "user/list";
 	}
@@ -87,6 +89,8 @@ public class UsersController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
+		if(activeUser.getRole() == "ROLE_USER")
+			return "/home";
 		if (idUsers != null) {
 			for (String id : idUsers) {
 				long iduser = Long.parseLong(id);

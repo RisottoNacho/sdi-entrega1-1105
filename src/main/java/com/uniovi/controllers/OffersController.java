@@ -55,6 +55,8 @@ public class OffersController {
 			@RequestParam(value = "", required = false) String searchText) {
 		String email = principal.getName(); // email es el name de la autenticación
 		User user = usersService.getUserByEmail(email);
+		if(user.getRole() == "ROLE_ADMIN")
+			return "/home";
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (searchText != null && !searchText.isEmpty()) {
 			offers = offersService.searchOffersByDescriptionAndNameExceptUser(pageable, searchText, user);
@@ -81,6 +83,8 @@ public class OffersController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
+		if(activeUser.getRole() == "ROLE_ADMIN")
+			return "/home";
 		model.addAttribute("offer", new Offer());
 		model.addAttribute("money", activeUser.getMoney());
 		return "/offer/add";
